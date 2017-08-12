@@ -5,14 +5,12 @@
 #ifndef SUDOKU_BOARDGENERATOR_H
 #define SUDOKU_BOARDGENERATOR_H
 
-
-#include "Cell.h"
-#include <stack>
-
 #define SMALL_SIZE 3
 
 #define WIDTH (SMALL_SIZE * SMALL_SIZE)
 #define HEIGHT (SMALL_SIZE * SMALL_SIZE)
+
+#define SHUFFLES 1000
 
 
 class BoardGenerator {
@@ -23,42 +21,35 @@ public:
 */
     BoardGenerator();
 
-    void generate();
+    void printBoard(int **);
 
-    void printBoard();
+    int *generate();
 
 private:
 
-    std::stack<Cell> cellStack;
+    /**
+     * Shuffle
+     */
 
-    Cell board[WIDTH][HEIGHT];
+    int *shuffle(int **a);
 
-    Cell tryPlaceCell(Cell);
+    int *swapBigColumns(int a, int b, int **board);
+
+    int *swapBigRows(int a, int b, int **board);
+
+    int *swapColumns(int, int, int **);
+
+    int *swapRows(int, int, int **);
+
+    int *transpose(int **board);
+
 
     /**
      * Print helpers
      */
-    bool isSqrtPrinted(int, int);
+    bool isSqrtPrinted(int);
 
     bool isLastPrinted(int, int);
-
-    /**
-     * Generate helpers
-     */
-
-    int positionInHorizontalLine(int, int);
-
-    int positionInVerticalLine(int, int);
-
-    int xPositionInSquare(int, int, int);
-
-    void increaseX(int *, int *);
-
-    void increaseY(int *, int *);
-
-    void nextSquare(int *, int *);
-
-    int placeCell(Cell c, int step);
 };
 
 

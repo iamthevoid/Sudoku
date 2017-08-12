@@ -8,142 +8,79 @@
 #include <string>
 #include <android/log.h>
 
-void BoardGenerator::generate() {
-    // Creating random SUDOKU
-    srand((unsigned int) time(NULL));
 
-    for (int step = 0; step < WIDTH * HEIGHT;) {
-        // number (1-9)
-        int number = step % WIDTH + 1;
-        // rand x
-        int nextX = rand() % WIDTH;
-        // rand y
-        int nextY = rand() % HEIGHT;
+int *BoardGenerator::generate() {
+    int board[HEIGHT][WIDTH] = {
+            {1, 2, 3, 4, 5, 6, 7, 8, 9},
+            {4, 5, 6, 7, 8, 9, 1, 2, 3},
+            {7, 8, 9, 1, 2, 3, 4, 5, 6},
+            {2, 3, 1, 5, 6, 4, 8, 9, 7},
+            {5, 6, 4, 8, 9, 7, 2, 3, 1},
+            {8, 9, 7, 2, 3, 1, 5, 6, 4},
+            {3, 1, 2, 6, 4, 5, 9, 7, 8},
+            {6, 4, 5, 9, 7, 8, 3, 1, 2},
+            {9, 7, 8, 3, 1, 2, 6, 4, 5}
+    };
 
-        step = placeCell(Cell(nextX, nextY, 0, number), step);
-        step++;
+    int **a = new int *[HEIGHT];
+
+    for (int i = 0; i < HEIGHT; i++) {
+        a[i] = new int[WIDTH];
+        for (int j = 0; j < WIDTH; j++) {
+            a[i][j] = board[i][j];
+        }
     }
+
+    printBoard(a);
+
+    *a = shuffle(a);
+
+    printBoard(a);
+
+    return *a;
 }
 
-int BoardGenerator::placeCell(Cell c, int step) {
+int *BoardGenerator::shuffle(int **a) {
 
-    Cell cell = tryPlaceCell(c);
+    int row1;
+    int row2;
+    int col1;
+    int col2;
 
-    if (cell.getAttempt() < WIDTH * HEIGHT) {
-        cellStack.push(cell);
-        board[cell.getY()][cell.getX()] = cell;
-        printBoard();
-    } else {
-        Cell poppedCell = cellStack.top();
-        cellStack.pop();
-        board[poppedCell.getY()][poppedCell.getX()] = Cell();
-        placeCell(poppedCell, 0);
-        step--;
+    for (int i = 0; i < SHUFFLES; ++i) {
+        int type = rand() % 5;
+        switch (type) {
+            case 0:
+                row1 = rand() % SMALL_SIZE;
+                row2 = rand() % SMALL_SIZE;
+                *a = swapBigRows(row1, row2, a);
+                break;
+            case 1:
+                col1 = rand() % SMALL_SIZE;
+                col2 = rand() % SMALL_SIZE;
+                *a = swapBigColumns(col1, col2, a);
+                break;
+            case 2:
+                row1 = rand() % HEIGHT;
+                row2 = rand() % SMALL_SIZE + row1 / SMALL_SIZE * SMALL_SIZE;
+                *a = swapRows(row1, row2, a);
+                break;
+            case 3:
+                col1 = rand() % WIDTH;
+                col2 = rand() % SMALL_SIZE + col1 / SMALL_SIZE * SMALL_SIZE;
+                *a = swapColumns(col1, col2, a);
+                break;
+            case 4:
+                *a = transpose(a);
+                break;
+        }
+
     }
 
-    return step;
+    return *a;
 }
 
-Cell BoardGenerator::tryPlaceCell(Cell cell) {
-
-    int nextX = cell.getX(), nextY = cell.getY();
-
-    // attempt. Increase to 81 if it is needed. Avoid endless cycle;
-    int attempt = cell.getAttempt();
-
-    if (attempt != 0) {
-        increaseX(&nextX, &nextY);
-    }
-
-    int number = cell.getNumber();
-
-    // Variable to find offset of attempts for not retry any attempts
-    int curX;
-
-    while (attempt++ < WIDTH * HEIGHT) {
-
-        // Number already placed in this Cell
-        if (board[nextY][nextX].getNumber() != 0) {
-            increaseX(&nextX, &nextY);
-            continue;
-        }
-
-        // Check if there are no same numbers in horizontal line
-        if (positionInHorizontalLine(nextY, number) != -1) {
-            curX = nextX;
-            attempt += WIDTH - curX - 1;
-            increaseY(&nextX, &nextY);
-            continue;
-        }
-
-
-        if (xPositionInSquare(nextX, nextY, number) != -1) {
-            curX = nextX;
-            nextSquare(&nextX, &nextY);
-            attempt += nextX == 0 ? WIDTH - curX : nextX - curX;
-            continue;
-        }
-
-        if (positionInVerticalLine(nextX, number) != -1) {
-            increaseX(&nextX, &nextY);
-            continue;
-        }
-
-        if (attempt < WIDTH * HEIGHT) break;
-    }
-
-    __android_log_print(ANDROID_LOG_INFO, "tag", "%d", attempt);
-
-
-    return Cell(nextX, nextY, attempt, number);
-}
-
-//
-// ------------------------- STATEMENTS -----------------------------------
-//
-
-int BoardGenerator::positionInHorizontalLine(int y, int value) {
-    for (int i = 0; i < WIDTH; ++i) {
-        if (board[y][i].getNumber() == value) {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
-int BoardGenerator::positionInVerticalLine(int x, int value) {
-
-    for (int i = 0; i < HEIGHT; ++i) {
-        if (board[i][x].getNumber() == value) {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
-int BoardGenerator::xPositionInSquare(int nextX, int nextY, int value) {
-    int startX = nextX / SMALL_SIZE * SMALL_SIZE;
-    int startY = nextY / SMALL_SIZE * SMALL_SIZE;
-
-    for (int i = startY; i < startY + SMALL_SIZE; ++i) {
-        for (int j = startX; j < startX + SMALL_SIZE; ++j) {
-
-            if (board[i][j].getNumber() == value) {
-                return j;
-            }
-        }
-    }
-
-    return -1;
-}
-
-//
-// -------------------------- PRINTER -------------------------------------
-//
-
-void BoardGenerator::printBoard() {
+void BoardGenerator::printBoard(int **a) {
 
     __android_log_write(ANDROID_LOG_INFO, "out", ".");
 
@@ -164,8 +101,8 @@ void BoardGenerator::printBoard() {
 
         for (int j = 0; j < WIDTH; j++) {
             char buff[100];
-            snprintf(buff, sizeof(buff), "%d%s", board[i][j].getNumber(),
-                     (isSqrtPrinted(j, WIDTH) && isLastPrinted(j, WIDTH)) ? "|" : " ");
+            snprintf(buff, sizeof(buff), "%d%s", a[i][j],
+                     (isSqrtPrinted(j) && isLastPrinted(j, WIDTH)) ? "|" : " ");
             buffAsStdStr.append(buff);
 
         }
@@ -173,14 +110,14 @@ void BoardGenerator::printBoard() {
         __android_log_write(ANDROID_LOG_INFO, "out", buffAsStdStr.c_str());
 
 
-        if (isSqrtPrinted(i, HEIGHT) && isLastPrinted(i, HEIGHT)) {
+        if (isSqrtPrinted(i) && isLastPrinted(i, HEIGHT)) {
             __android_log_print(ANDROID_LOG_INFO, "out", "\n");
             std::string div = "";
             for (int k = 0; k < WIDTH; k++) {
 
                 char buff[100];
                 snprintf(buff, sizeof(buff), "%s%s", "-",
-                         (isSqrtPrinted(k, WIDTH) && isLastPrinted(k, WIDTH)) ? "+" : "-");
+                         (isSqrtPrinted(k) && isLastPrinted(k, WIDTH)) ? "+" : "-");
                 div.append(buff);
 
 
@@ -193,33 +130,12 @@ void BoardGenerator::printBoard() {
     }
 }
 
-bool BoardGenerator::isSqrtPrinted(int which, int metrics) {
+bool BoardGenerator::isSqrtPrinted(int which) {
     return which % SMALL_SIZE == SMALL_SIZE - 1;
 }
 
 bool BoardGenerator::isLastPrinted(int which, int metrics) {
     return which != metrics - 1;
-}
-
-void BoardGenerator::increaseX(int *nextX, int *nextY) {
-    (*nextX)++;
-    *nextX = (*nextX == WIDTH) ? 0 : *nextX;
-    *nextY = (*nextX == 0) ? *nextY + 1 : *nextY;
-    (*nextY) = (*nextY == HEIGHT) ? 0 : *nextY;
-}
-
-void BoardGenerator::increaseY(int *nextX, int *nextY) {
-    (*nextY)++;
-    *nextY = (*nextY == HEIGHT) ? 0 : *nextY;
-    (*nextX) = 0;
-}
-
-
-void BoardGenerator::nextSquare(int *nextX, int *nextY) {
-    (*nextX) = (*nextX / SMALL_SIZE + 1) * SMALL_SIZE;
-    (*nextX) = (*nextX == WIDTH) ? 0 : *nextX;
-    (*nextY) = (*nextX == 0) ? (*nextY + 1) : *nextY;
-    (*nextY) = (*nextY == HEIGHT) ? 0 : *nextY;
 }
 
 BoardGenerator::BoardGenerator() {
@@ -228,4 +144,58 @@ BoardGenerator::BoardGenerator() {
             board[i][j] = Cell();
         }
     }
+}
+
+int *BoardGenerator::swapRows(int a, int b, int **board) {
+
+    for (int i = 0; i < HEIGHT; ++i) {
+        int buff = board[a][i];
+        board[a][i] = board[b][i];
+        board[b][i] = buff;
+    }
+    return *board;
+}
+
+int *BoardGenerator::swapColumns(int a, int b, int **board) {
+    for (int i = 0; i < WIDTH; ++i) {
+        int buff = board[i][a];
+        board[i][a] = board[i][b];
+        board[i][b] = buff;
+    }
+    return *board;
+}
+
+int *BoardGenerator::swapBigColumns(int a, int b, int **board) {
+    for (int i = 0; i < WIDTH; ++i) {
+        for (int k = 0; k < SMALL_SIZE; k++) {
+            int buff = board[i][k + SMALL_SIZE * a];
+            board[i][k + SMALL_SIZE * a] = board[i][k + SMALL_SIZE * b];
+            board[i][k + SMALL_SIZE * b] = buff;
+        }
+    }
+
+    return *board;
+}
+
+int *BoardGenerator::swapBigRows(int a, int b, int **board) {
+    for (int i = 0; i < WIDTH; ++i) {
+        for (int k = 0; k < SMALL_SIZE; k++) {
+            int buff = board[k + SMALL_SIZE * a][i];
+            board[k + SMALL_SIZE * a][i] = board[k + SMALL_SIZE * b][i];
+            board[k + SMALL_SIZE * b][i] = buff;
+        }
+    }
+
+    return *board;
+}
+
+int *BoardGenerator::transpose(int **board) {
+    for (int i = 0; i < HEIGHT; ++i) {
+        for (int j = 0; j < i + 1; ++j) {
+            int buff = board[i][j];
+            board[i][j] = board[j][i];
+            board[j][i] = buff;
+        }
+    }
+    return *board;
 }

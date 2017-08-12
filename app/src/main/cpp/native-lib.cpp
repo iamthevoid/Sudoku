@@ -18,6 +18,5 @@ Java_iam_thevoid_sudoku_MainActivity_generate(
         jobject /* this */) {
     BoardGenerator boardGenerator;
     boardGenerator.generate();
-    boardGenerator.printBoard();
     return NULL;
 }

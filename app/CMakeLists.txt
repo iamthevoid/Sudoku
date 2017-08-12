@@ -18,7 +18,6 @@ add_library( # Sets the name of the library.
 
              # Provides a relative path to your source file(s).
              src/main/cpp/native-lib.cpp
-             src/main/cpp/Cell.cpp
              src/main/cpp/BoardGenerator.cpp
              )
 
