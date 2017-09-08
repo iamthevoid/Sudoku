@@ -141,7 +141,7 @@ bool BoardGenerator::isLastPrinted(int which, int metrics) {
 BoardGenerator::BoardGenerator() {
     for (int i = 0; i < WIDTH; ++i) {
         for (int j = 0; j < HEIGHT; ++j) {
-            board[i][j] = Cell();
+//            board[i][j] = Cell();
         }
     }
 }

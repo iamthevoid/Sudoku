@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="item"
+            type="iam.thevoid.sudoku.Cell" />
+    </data>
+
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/cellDividers"
+        android:padding="1dp"
+        app:cell_height="@{true}">
+
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@{item.isOddBlock() ? @color/mainBackground : @color/darkBackground}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="H,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                style="@style/CellText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:intText="@{item.number}"
+                tools:text="0" />
+        </FrameLayout>
+
+
+    </android.support.constraint.ConstraintLayout>
+</layout>

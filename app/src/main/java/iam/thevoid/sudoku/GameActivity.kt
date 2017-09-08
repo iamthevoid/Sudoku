@@ -1,19 +1,16 @@
 package iam.thevoid.sudoku
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
-import android.widget.Button
+import iam.thevoid.sudoku.databinding.ActivityMainBinding
+import iam.thevoid.sudoku.util.FileUtil
 
-class MainActivity : AppCompatActivity() {
+class GameActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        findViewById<Button>(R.id.sample_text).setOnClickListener({ generate() })
-
-        // Example of a call to a native method
-
+        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding.vm = GameScreenViewModel()
     }
 
     /**
