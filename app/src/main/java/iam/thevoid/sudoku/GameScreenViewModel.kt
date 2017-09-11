@@ -1,6 +1,7 @@
 package iam.thevoid.sudoku
 
 import android.databinding.ObservableArrayList
+import iam.thevoid.sudoku.db.model.Cell
 import iam.thevoid.sudoku.util.FileUtil
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 
@@ -12,6 +13,7 @@ class GameScreenViewModel {
     val binding: ItemBinding<Cell> = ItemBinding.of(BR.item, R.layout.cell)
 
     init {
-        cells.addAll(FileUtil.getBoard(App.instance)!!)
+        FileUtil.getBoard(App.instance)
+//        cells.addAll(!!)
     }
 }

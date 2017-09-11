@@ -2,8 +2,13 @@ package iam.thevoid.sudoku.util
 
 import android.content.Context
 import android.util.Log
-import iam.thevoid.sudoku.Cell
-import java.io.ByteArrayOutputStream
+import iam.thevoid.sudoku.db.DbHandler
+import iam.thevoid.sudoku.db.model.Board
+import iam.thevoid.sudoku.db.model.Cell
+import io.realm.RealmList
+import java.io.BufferedReader
+import java.io.InputStreamReader
+import java.util.regex.Pattern
 
 
 /**
@@ -12,27 +17,33 @@ import java.io.ByteArrayOutputStream
 object FileUtil {
 
     @JvmStatic
-    fun getBoard(context: Context): Array<Cell>? {
+    fun getBoard(context: Context) {
         val cells: ArrayList<Cell> = ArrayList()
         val inputStream = context.getAssets().open("boards")
 
-        val output = ByteArrayOutputStream()
-        output.write(inputStream.readBytes())
-        val file = output.toByteArray()
-        var count = 0
-        for (byte in file) {
-            Log.i("t", "" + byte)
-            if (byte.toChar() == ',') {
-                continue
-            } else if (byte.toChar() == '\n') {
-                break
-            } else {
-                cells.add(Cell(byte.toChar().toString().toInt(), count % 9,  count / 9))
+        val reader = BufferedReader(InputStreamReader(inputStream))
+        var line = reader.readLine()
+        while (line != null) {
+            val sudokuArr = line.split(Pattern.compile(","))
+            val sudoku = sudokuArr[1]
+            var count = 0
+            for (char in sudoku) {
+                val cell = Cell()
+                cell.y = count / 9
+                cell.x = count % 9
+                cell.number = char.toInteger()
+                cells.add(cell)
                 count++
             }
+            break
+//            line = reader.readLine()
         }
+        val board = Board()
+        board.cells = RealmList()
+        board.cells!!.addAll(cells.toTypedArray())
 
-        return cells.toTypedArray()
+        DbHandler.create(board)
+        Log.i("tag", "999")
     }
 
 
