@@ -1,8 +1,12 @@
-package iam.thevoid.sudoku
+package iam.thevoid.sudoku.viewmodel
 
 import android.databinding.ObservableArrayList
+import android.util.Log
+import iam.thevoid.sudoku.App
+import iam.thevoid.sudoku.BR
+import iam.thevoid.sudoku.R
 import iam.thevoid.sudoku.db.model.Cell
-import iam.thevoid.sudoku.util.FileUtil
+import iam.thevoid.sudoku.util.FileUtil.extractAssets
 import me.tatarka.bindingcollectionadapter2.ItemBinding
 
 /**
@@ -13,7 +17,8 @@ class GameScreenViewModel {
     val binding: ItemBinding<Cell> = ItemBinding.of(BR.item, R.layout.cell)
 
     init {
-        FileUtil.getBoard(App.instance)
-//        cells.addAll(!!)
+        extractAssets(App.instance) { percent ->
+            Log.i("fsd", "percent: " + percent)
+        }
     }
 }

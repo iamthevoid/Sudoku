@@ -1,4 +1,4 @@
-package iam.thevoid.sudoku
+package iam.thevoid.sudoku.pages
 
 import android.annotation.SuppressLint
 import android.os.Bundle

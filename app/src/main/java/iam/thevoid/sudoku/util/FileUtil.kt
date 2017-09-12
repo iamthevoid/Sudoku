@@ -1,13 +1,10 @@
 package iam.thevoid.sudoku.util
 
 import android.content.Context
-import android.util.Log
 import iam.thevoid.sudoku.db.DbHandler
 import iam.thevoid.sudoku.db.model.Board
 import iam.thevoid.sudoku.db.model.Cell
 import io.realm.RealmList
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.util.regex.Pattern
 
 
@@ -17,13 +14,22 @@ import java.util.regex.Pattern
 object FileUtil {
 
     @JvmStatic
-    fun getBoard(context: Context) {
-        val cells: ArrayList<Cell> = ArrayList()
+    fun extractAssets(context: Context, listener: (percent: Long) -> Unit) {
+
         val inputStream = context.getAssets().open("boards")
 
-        val reader = BufferedReader(InputStreamReader(inputStream))
-        var line = reader.readLine()
-        while (line != null) {
+        val data = inputStream.bufferedReader().use {
+            it.readText()
+        }
+
+        val dataArr = data.split(Pattern.compile("\n"))
+
+        for (i in dataArr.indices) {
+
+            val line = dataArr[i]
+
+            val cells: ArrayList<Cell> = ArrayList()
+
             val sudokuArr = line.split(Pattern.compile(","))
             val sudoku = sudokuArr[1]
             var count = 0
@@ -34,17 +40,13 @@ object FileUtil {
                 cell.number = char.toInteger()
                 cells.add(cell)
                 count++
+
             }
-            break
-//            line = reader.readLine()
+            listener((((i + 1).toFloat() / dataArr.size.toFloat()) * 100F).toLong())
+            val board = Board()
+            board.cells = RealmList()
+            board.cells!!.addAll(cells.toTypedArray())
+            DbHandler.create(board)
         }
-        val board = Board()
-        board.cells = RealmList()
-        board.cells!!.addAll(cells.toTypedArray())
-
-        DbHandler.create(board)
-        Log.i("tag", "999")
     }
-
-
 }

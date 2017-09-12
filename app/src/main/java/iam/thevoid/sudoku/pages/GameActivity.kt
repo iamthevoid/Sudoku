@@ -1,9 +1,10 @@
-package iam.thevoid.sudoku
+package iam.thevoid.sudoku.pages
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import iam.thevoid.sudoku.viewmodel.GameScreenViewModel
+import iam.thevoid.sudoku.R
 import iam.thevoid.sudoku.databinding.ActivityMainBinding
-import iam.thevoid.sudoku.util.FileUtil
 
 class GameActivity : BaseActivity() {
 
