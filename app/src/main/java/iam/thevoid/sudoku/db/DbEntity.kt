@@ -10,4 +10,8 @@ import io.realm.annotations.PrimaryKey
 open interface DbEntity {
 
     var id: Long
+
+    fun resolveId() : Long {
+        return 0
+    }
 }

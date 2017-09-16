@@ -1,24 +1,34 @@
 package iam.thevoid.sudoku.db
 
-import iam.thevoid.sudoku.db.Dao.Companion.incrementalId
+import iam.thevoid.sudoku.db.model.Board
 import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.RealmQuery
 import java.util.concurrent.atomic.AtomicLong
-import java.lang.reflect.AccessibleObject.setAccessible
-import kotlin.reflect.jvm.isAccessible
 
 
 /**
  * Created by iam on 09/09/2017.
  */
-class Dao<T> where T : RealmObject, T : DbEntity {
+class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
 
     companion object {
-        var incrementalId : AtomicLong = AtomicLong(0)
+        var incrementalId: AtomicLong = AtomicLong(0)
     }
 
+    fun query() : RealmQuery<T> {
+        return DbHandler.getRealm().where(cls)
+    }
+
+    fun count(applyQuery : RealmQuery<T>.() -> Unit) : Int {
+        val c = query().apply(applyQuery).findAll().count()
+        DbHandler.close()
+        return c
+    }
+
+
     fun prepareCreateOrUpdate(entity: T) {
-        responseId(entity)
+        resolveId(entity)
         prepareCreateOrUpdateInternalItems(entity)
     }
 
@@ -40,8 +50,8 @@ class Dao<T> where T : RealmObject, T : DbEntity {
         }
     }
 
-    private fun responseId(entity : T) {
-        val id = entity.id
+    private fun resolveId(entity: T) {
+        val id = entity.resolveId()
         if (id == 0L) {
             entity.id = incrementalId.incrementAndGet()
         }
@@ -55,4 +65,27 @@ class Dao<T> where T : RealmObject, T : DbEntity {
         DbHandler.getRealm().close()
     }
 
+    fun clone(objects: Iterable<T>?): List<T>? {
+        if (objects == null) {
+            return null
+        }
+        val result = ArrayList<T>()
+        for (o in objects) {
+            clone(o)?.let { result.add(it) }
+        }
+        return result
+    }
+
+    fun clone(o: T?): T? {
+        if (o == null) {
+            return null
+        }
+        if (!(RealmObject.isManaged(o) && RealmObject.isValid(o))) {
+            return o
+        }
+        val realm = DbHandler.getRealm()
+        val t = realm.copyFromRealm(o)
+        realm.close()
+        return t
+    }
 }

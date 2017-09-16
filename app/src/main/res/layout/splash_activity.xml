@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="vm"
+            type="iam.thevoid.sudoku.viewmodel.SplashViewModel"/>
+    </data>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@color/mainBackground"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:fontFamily="sans-serif-medium"
+            android:textSize="22dp"
+            android:layout_gravity="center"
+            android:text="@{@string/loading_percent(vm.percent)}"
+            tools:text="@string/loading_percent"/>
+
+    </FrameLayout>
+</layout>

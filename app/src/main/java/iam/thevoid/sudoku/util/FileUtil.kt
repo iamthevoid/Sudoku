@@ -4,6 +4,8 @@ import android.content.Context
 import iam.thevoid.sudoku.db.DbHandler
 import iam.thevoid.sudoku.db.model.Board
 import iam.thevoid.sudoku.db.model.Cell
+import io.reactivex.Observable
+import io.reactivex.ObservableEmitter
 import io.realm.RealmList
 import java.util.regex.Pattern
 
@@ -14,7 +16,7 @@ import java.util.regex.Pattern
 object FileUtil {
 
     @JvmStatic
-    fun extractAssets(context: Context, listener: (percent: Long) -> Unit) {
+    fun extractAssets(context: Context, listener: (percent: Int) -> Unit) {
 
         val inputStream = context.getAssets().open("boards")
 
@@ -42,11 +44,22 @@ object FileUtil {
                 count++
 
             }
-            listener((((i + 1).toFloat() / dataArr.size.toFloat()) * 100F).toLong())
+            listener((((i + 1).toFloat() / dataArr.size.toFloat()) * 100F).toInt())
             val board = Board()
             board.cells = RealmList()
+            board.cellsData = sudokuArr[1]
             board.cells!!.addAll(cells.toTypedArray())
             DbHandler.create(board)
+        }
+    }
+
+    @JvmStatic
+    fun extractFiles(context: Context) : Observable<Int> {
+        return Observable.create { e: ObservableEmitter<Int> ->
+            run {
+                extractAssets(context, { percent -> e.onNext(percent) })
+                e.onComplete()
+            }
         }
     }
 }

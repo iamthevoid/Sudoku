@@ -16,9 +16,5 @@ class GameScreenViewModel {
     var cells: ObservableArrayList<Cell> = ObservableArrayList()
     val binding: ItemBinding<Cell> = ItemBinding.of(BR.item, R.layout.cell)
 
-    init {
-        extractAssets(App.instance) { percent ->
-            Log.i("fsd", "percent: " + percent)
-        }
-    }
+
 }
