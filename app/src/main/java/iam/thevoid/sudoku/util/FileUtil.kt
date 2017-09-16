@@ -26,14 +26,19 @@ object FileUtil {
 
         val dataArr = data.split(Pattern.compile("\n"))
 
+//        val regex = Pattern.compile(",")
+
+        val cells: ArrayList<Cell> = ArrayList()
+
         for (i in dataArr.indices) {
 
             val line = dataArr[i]
 
-            val cells: ArrayList<Cell> = ArrayList()
+//            val sudokuArr = line.split(regex)
 
-            val sudokuArr = line.split(Pattern.compile(","))
-            val sudoku = sudokuArr[1]
+            val sudoku = line.substring(82)
+
+            //sudokuArr[1]
             var count = 0
             for (char in sudoku) {
                 val cell = Cell()
@@ -47,9 +52,11 @@ object FileUtil {
             listener((((i + 1).toFloat() / dataArr.size.toFloat()) * 100F).toInt())
             val board = Board()
             board.cells = RealmList()
-            board.cellsData = sudokuArr[1]
-            board.cells!!.addAll(cells.toTypedArray())
+            board.cellsData = sudoku
+            board.cells!!.addAll(cells)
             DbHandler.create(board)
+
+            cells.clear()
         }
     }
 

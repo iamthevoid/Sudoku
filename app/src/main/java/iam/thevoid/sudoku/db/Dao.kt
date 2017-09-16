@@ -26,6 +26,12 @@ class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
         return c
     }
 
+    fun findFirstAndClose(applyQuery : RealmQuery<T>.() -> Unit): T? {
+        val entity = clone(query().apply(applyQuery).findFirst())
+        DbHandler.close()
+        return entity
+    }
+
 
     fun prepareCreateOrUpdate(entity: T) {
         resolveId(entity)

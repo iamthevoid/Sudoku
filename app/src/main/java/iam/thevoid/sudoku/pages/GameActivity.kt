@@ -1,5 +1,7 @@
 package iam.thevoid.sudoku.pages
 
+import android.content.Context
+import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import iam.thevoid.sudoku.viewmodel.GameScreenViewModel
@@ -21,6 +23,11 @@ class GameActivity : BaseActivity() {
     external fun generate()
 
     companion object {
+
+        fun start(context: Context) {
+            context.startActivity(Intent(context, GameActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
 
         // Used to load the 'native-lib' library on application startup.
         init {

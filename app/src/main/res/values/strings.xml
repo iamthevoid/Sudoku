@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Sudoku</string>
     <string name="loading_percent">Loading\n%1$d%%</string>
+    <string name="resume">RESUME</string>
+    <string name="start">START</string>
+    <string name="options">OPTIONS</string>
+    <string name="statistics">STATISTICS</string>
+    <string name="exit">EXIT</string>
 </resources>

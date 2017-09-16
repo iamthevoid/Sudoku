@@ -22,5 +22,16 @@
             android:text="@{@string/loading_percent(vm.percent)}"
             tools:text="@string/loading_percent"/>
 
+        <TextView
+            android:layout_margin="16dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:textSize="14dp"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:text="First launch can take a long time because application is preparing data."/>
+
     </FrameLayout>
 </layout>

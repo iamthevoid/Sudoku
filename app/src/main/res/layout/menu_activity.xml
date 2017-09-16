@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="iam.thevoid.sudoku.viewmodel.MenuViewModel" />
+    </data>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/mainBackground">
+
+        <LinearLayout
+            android:layout_gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                style="@style/MenuItem"
+                app:click="@{vm.onResumeClick}"
+                app:visibile="@{vm.isGameStarted}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/resume"/>
+            <TextView
+                style="@style/MenuItem"
+                app:click="@{vm.onStartClick}"
+                app:visibile="@{!vm.isGameStarted}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/start"/>
+            <!--<TextView-->
+                <!--style="@style/MenuItem"-->
+                <!--app:click="@{vm.onOptionsClick}"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/options"/>-->
+            <!--<TextView-->
+                <!--style="@style/MenuItem"-->
+                <!--app:click="@{vm.onStatisticsClick}"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/statistics"/>-->
+            <TextView
+                style="@style/MenuItem"
+                app:click="@{vm.onExitClick}"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/exit"/>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

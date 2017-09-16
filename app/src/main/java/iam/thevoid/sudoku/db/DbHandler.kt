@@ -10,7 +10,7 @@ import io.realm.RealmObject
  */
 object DbHandler {
 
-    private val SCHEMA_VERSION = 2
+    private val SCHEMA_VERSION = 5
 
     fun init(context: Context) {
         Realm.init(context)
@@ -38,6 +38,7 @@ object DbHandler {
     fun <T> create(entity: T) where T : RealmObject, T : DbEntity {
         var dao: Dao<T> = Dao(entity.javaClass)
         dao.update(entity)
+        close()
     }
 
 }
