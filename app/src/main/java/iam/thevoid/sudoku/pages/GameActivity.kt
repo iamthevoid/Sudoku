@@ -10,10 +10,17 @@ import iam.thevoid.sudoku.databinding.ActivityMainBinding
 
 class GameActivity : BaseActivity() {
 
+    var binding: ActivityMainBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         super.onCreate(savedInstanceState)
-        val binding: ActivityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
-        binding.vm = GameScreenViewModel()
+        binding?.vm = GameScreenViewModel()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        binding?.vm?.onInit()
     }
 
     /**

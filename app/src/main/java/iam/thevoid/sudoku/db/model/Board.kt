@@ -3,9 +3,11 @@ package iam.thevoid.sudoku.db.model
 import com.google.gson.annotations.SerializedName
 import iam.thevoid.sudoku.db.DbEntity
 import iam.thevoid.sudoku.db.DbHandler
+import iam.thevoid.sudoku.util.toInteger
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import javax.annotation.Nonnull
 
 /**
  * Created by iam on 08/09/2017.
@@ -16,20 +18,39 @@ open class Board : RealmObject(), DbEntity {
     @SerializedName("cells")
     var cells: RealmList<Cell>? = null
         set(value) {
+            field = value
             DbHandler.create(this)
         }
     @SerializedName("is_started")
-    var isStarted: Boolean = false
+    private var isStarted: Boolean = false
+        set(value) {
+            field = value
+            val sudoku = cellsData!!.substring(82)
+            val cells = RealmList<Cell>()
+            var count = 0
+            for (char in sudoku) {
+                val cell = Cell()
+                cell.y = count / 9
+                cell.x = count % 9
+                cell.number = char.toInteger()
+                cells.add(cell)
+                count++
+
+            }
+            this.cells = cells
+        }
+    @PrimaryKey
+    @Nonnull
+    @SerializedName("cells_data")
+    var cellsData: String? = null
         set(value) {
             field = value
             DbHandler.create(this)
         }
-    @PrimaryKey
-    @SerializedName("cells_data")
-    var cellsData: String? = null
-        set(value) {
-            DbHandler.create(this)
-        }
+
+    fun start() {
+        isStarted = true
+    }
 
     override fun resolveId(): Long {
         val b = DbHandler.getRealm().where(javaClass).equalTo("cellsData", cellsData).findFirst()

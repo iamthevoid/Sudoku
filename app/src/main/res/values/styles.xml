@@ -12,6 +12,7 @@
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
     <style name="BoardStyle">
+        <item name="android:layout_margin">8dp</item>
         <item name="android:overScrollMode">never</item>
         <item name="android:padding">1dp</item>
         <item name="android:background">@color/cellDividers</item>

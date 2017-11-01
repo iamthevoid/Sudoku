@@ -5,6 +5,8 @@
 
         <import type="me.tatarka.bindingcollectionadapter2.LayoutManagers" />
 
+        <import type="android.support.v7.widget.LinearLayoutManager" />
+
         <variable
             name="vm"
             type="iam.thevoid.sudoku.viewmodel.GameScreenViewModel" />
@@ -17,13 +19,150 @@
         android:background="@color/mainBackground"
         tools:context="iam.thevoid.sudoku.pages.GameActivity">
 
-        <android.support.v7.widget.RecyclerView
-            style="@style/BoardStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:itemBinding="@{vm.binding}"
-            app:items="@{vm.cells}"
-            app:layoutManager="@{LayoutManagers.grid(9)}" />
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintDimensionRatio="W,1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/r1"
+                style="@style/BoardStyle"
+                android:layout_width="0dp"
+
+                android:layout_height="0dp"
+                app:itemBinding="@{vm.binding}"
+                app:items="@{vm.cells}"
+                app:layoutManager="@{LayoutManagers.grid(9)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/r2"-->
+            <!--style="@style/BoardStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--app:itemBinding="@{vm.binding}"-->
+            <!--app:items="@{vm.cells2}"-->
+            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
+            <!--app:layout_constraintBottom_toTopOf="@id/r3"-->
+
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/r1"-->
+            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/r3"-->
+            <!--style="@style/BoardStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+
+
+            <!--app:itemBinding="@{vm.binding}"-->
+            <!--app:items="@{vm.cells3}"-->
+            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
+            <!--app:layout_constraintBottom_toTopOf="@id/r4"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/r2"-->
+            <!---->
+            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/r4"-->
+            <!--style="@style/BoardStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--app:itemBinding="@{vm.binding}"-->
+            <!--app:items="@{vm.cells4}"-->
+            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
+
+            <!--app:layout_constraintBottom_toTopOf="@id/r5"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!---->
+            <!--app:layout_constraintTop_toBottomOf="@id/r3"-->
+            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/r5"-->
+            <!--style="@style/BoardStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+
+            <!--app:itemBinding="@{vm.binding}"-->
+            <!--app:items="@{vm.cells5}"-->
+            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
+            <!--app:layout_constraintBottom_toTopOf="@id/r6"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/r4"-->
+            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/r6"-->
+            <!--style="@style/BoardStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--app:itemBinding="@{vm.binding}"-->
+            <!--app:items="@{vm.cells6}"-->
+            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
+            <!--app:layout_constraintBottom_toTopOf="@id/r7"-->
+
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/r5"-->
+            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/r7"-->
+            <!--style="@style/BoardStyle"-->
+            <!--android:layout_width="0dp"-->
+
+            <!--android:layout_height="0dp"-->
+            <!--app:itemBinding="@{vm.binding}"-->
+            <!--app:items="@{vm.cells7}"-->
+            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
+            <!--app:layout_constraintBottom_toTopOf="@id/r8"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/r6"-->
+            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/r8"-->
+            <!--style="@style/BoardStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+
+            <!--app:itemBinding="@{vm.binding}"-->
+            <!--app:items="@{vm.cells8}"-->
+            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
+            <!--app:layout_constraintBottom_toTopOf="@id/r9"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/r7"-->
+            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+
+            <!--<android.support.v7.widget.RecyclerView-->
+            <!--android:id="@+id/r9"-->
+            <!--style="@style/BoardStyle"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="0dp"-->
+            <!--app:itemBinding="@{vm.binding}"-->
+            <!--app:items="@{vm.cells9}"-->
+            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
+
+            <!--app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--app:layout_constraintEnd_toEndOf="parent"-->
+            <!--app:layout_constraintStart_toStartOf="parent"-->
+            <!--app:layout_constraintTop_toBottomOf="@id/r8"-->
+            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+        </android.support.constraint.ConstraintLayout>
 
     </android.support.constraint.ConstraintLayout>
 </layout>

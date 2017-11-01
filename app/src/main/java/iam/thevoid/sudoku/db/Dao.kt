@@ -5,6 +5,8 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.RealmQuery
 import java.util.concurrent.atomic.AtomicLong
+import kotlin.reflect.KVisibility
+import kotlin.reflect.full.memberProperties
 
 
 /**
@@ -46,7 +48,9 @@ class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
             } else if (field.type == RealmList<T>().javaClass) {
                 field.isAccessible = true
 
-                val value = field.get(entity) as RealmList<T>
+                val any = field.get(entity) ?: continue
+
+                val value = any as RealmList<T>
                 for (entity in value) {
                     if (entity is DbEntity) {
                         prepareCreateOrUpdate(entity)
