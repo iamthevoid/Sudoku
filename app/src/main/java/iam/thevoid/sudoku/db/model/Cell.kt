@@ -21,6 +21,13 @@ open class Cell : RealmObject(), DbEntity {
     @SerializedName("y")
     var y: Int = 0
 
+    @SerializedName("inserted_number")
+    var insertedNumber: Int = 0
+
+    var selected = false
+    var sameColor = false
+    var wrong = false
+
     fun isOddBlock(): Boolean {
         val xMod = x / 3
         val yMod = y / 3

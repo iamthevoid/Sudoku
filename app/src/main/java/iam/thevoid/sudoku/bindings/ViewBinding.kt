@@ -1,6 +1,7 @@
 package iam.thevoid.sudoku.bindings
 
 import android.databinding.BindingAdapter
+import android.support.annotation.IntDef
 import android.view.View
 
 /**
@@ -14,8 +15,12 @@ object ViewBinding {
         view.setOnClickListener(listener)
     }
     @JvmStatic
-    @BindingAdapter("visibile")
-    fun setOnClickListener(view : View, boolean: Boolean) {
-        view.visibility = if (boolean) View.VISIBLE else View.GONE
+    @BindingAdapter("visibile", "type", requireAll = false)
+    fun setOnClickListener(view : View, boolean: Boolean, type : Int) {
+        if (!boolean && type != View.VISIBLE) {
+            view.visibility = type
+        } else{
+            view.visibility = if (boolean) View.VISIBLE else View.GONE
+        }
     }
 }

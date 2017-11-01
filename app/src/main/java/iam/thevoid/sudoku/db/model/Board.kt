@@ -26,13 +26,15 @@ open class Board : RealmObject(), DbEntity {
         set(value) {
             field = value
             val sudoku = cellsData!!.substring(82)
+            val sudokuGame = cellsData!!.substring(0, 81)
             val cells = RealmList<Cell>()
             var count = 0
-            for (char in sudoku) {
+            for (index in sudoku.indices) {
                 val cell = Cell()
                 cell.y = count / 9
                 cell.x = count % 9
-                cell.number = char.toInteger()
+                cell.number = sudoku.toCharArray().get(index).toInteger()
+                cell.insertedNumber = sudokuGame.toCharArray().get(index).toInteger()
                 cells.add(cell)
                 count++
 

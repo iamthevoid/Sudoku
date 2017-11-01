@@ -3,6 +3,7 @@
 
     <data>
 
+        <import type="android.view.View"/>
         <variable
             name="item"
             type="iam.thevoid.sudoku.db.model.Cell" />
@@ -13,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/cellDividers"
-        android:padding="1dp">
+        android:padding="0.5dp">
 
 
         <FrameLayout
@@ -30,10 +31,11 @@
                 style="@style/CellText"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:intText="@{item.number}"
+                app:visibile="@{item.insertedNumber != 0}"
+                app:type="@{View.INVISIBLE}"
+                app:intText="@{item.insertedNumber}"
                 tools:text="0" />
         </FrameLayout>
-
 
     </android.support.constraint.ConstraintLayout>
 </layout>
