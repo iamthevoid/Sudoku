@@ -29,7 +29,10 @@ android {
                 cppFlags ""
             }
         }
+        vectorDrawables.useSupportLibrary = true
     }
+
+
     buildTypes {
         release {
             minifyEnabled false

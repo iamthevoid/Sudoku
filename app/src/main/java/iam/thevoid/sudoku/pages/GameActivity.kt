@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.util.Log
+import android.view.ViewTreeObserver
 import iam.thevoid.sudoku.viewmodel.GameScreenViewModel
 import iam.thevoid.sudoku.R
 import iam.thevoid.sudoku.databinding.ActivityMainBinding
@@ -13,8 +15,8 @@ class GameActivity : BaseActivity() {
     var binding: ActivityMainBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         super.onCreate(savedInstanceState)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding?.vm = GameScreenViewModel()
     }
 

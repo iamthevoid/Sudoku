@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recycler_hack">1.5dp</dimen>
+    <dimen name="thin_line">1dp</dimen>
+    <dimen name="thick_line">2dp</dimen>
+</resources>

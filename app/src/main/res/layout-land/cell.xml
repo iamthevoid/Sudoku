@@ -1,41 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
-        <import type="android.view.View"/>
+        <import type="android.view.View" />
+
         <variable
             name="item"
             type="iam.thevoid.sudoku.db.model.Cell" />
     </data>
 
-    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <!--<iam.thevoid.sudoku.widget.SquareConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:background="@color/cellDividers"-->
+    <!--&gt;-->
+
+
+    <iam.thevoid.sudoku.widget.SquareFrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/cellDividers"
-        android:padding="0.5dp">
+        android:layout_height="match_parent"
+        android:background="@{item.isOddBlock() ? @color/odd_cell : @color/even_cell}">
 
+        <TextView
+            style="@style/CellText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:intText="@{item.insertedNumber}"
+            app:type="@{View.INVISIBLE}"
+            app:visibile="@{item.insertedNumber != 0}"
+            tools:text="0" />
+    </iam.thevoid.sudoku.widget.SquareFrameLayout>
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@{item.isOddBlock() ? @color/mainBackground : @color/darkBackground}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="W,1:1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                style="@style/CellText"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:visibile="@{item.insertedNumber != 0}"
-                app:type="@{View.INVISIBLE}"
-                app:intText="@{item.insertedNumber}"
-                tools:text="0" />
-        </FrameLayout>
-
-    </android.support.constraint.ConstraintLayout>
+    <!--</iam.thevoid.sudoku.widget.SquareConstraintLayout>-->
 </layout>

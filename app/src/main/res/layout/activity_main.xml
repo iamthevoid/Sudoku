@@ -16,153 +16,147 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mainBackground"
         tools:context="iam.thevoid.sudoku.pages.GameActivity">
 
-        <android.support.constraint.ConstraintLayout
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/toolbar_background"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/ic_arrow_back_black">
+
+            <TextView
+                android:id="@+id/counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center_vertical"
+                android:textColor="@color/text_color"
+                android:textSize="20dp"
+                app:hour_time="@{vm.millis}"
+                tools:text="00:04:36" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginRight="16dp"
+                android:textColor="@color/text_color"
+                android:textSize="18dp"
+                tools:text="27/81" />
+        </android.support.v7.widget.Toolbar>
+
+        <iam.thevoid.sudoku.widget.BoardRecyclerView
+            android:id="@+id/recycler"
+            style="@style/BoardStyle"
+            decoration="@{vm.decoration(@dimen/thick_line, @dimen/thin_line)}"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintDimensionRatio="W,1:1"
+            android:layout_margin="25dp"
+            app:itemBinding="@{vm.binding}"
+            app:items="@{vm.cells}"
+            app:layoutManager="@{LayoutManagers.grid(9)}"
+            app:layout_constraintBottom_toTopOf="@id/bottom"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/r1"
-                style="@style/BoardStyle"
-                android:layout_width="0dp"
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-                android:layout_height="0dp"
-                app:itemBinding="@{vm.binding}"
-                app:items="@{vm.cells}"
-                app:layoutManager="@{LayoutManagers.grid(9)}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+            <TextView
+                android:id="@+id/one"
+                style="@style/NumberButton"
+                android:text="1"
+                app:layout_constraintRight_toLeftOf="@id/two"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/r2"-->
-            <!--style="@style/BoardStyle"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--app:itemBinding="@{vm.binding}"-->
-            <!--app:items="@{vm.cells2}"-->
-            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
-            <!--app:layout_constraintBottom_toTopOf="@id/r3"-->
+            <TextView
+                android:id="@+id/two"
+                style="@style/NumberButton"
+                android:text="2"
+                app:layout_constraintLeft_toRightOf="@id/one"
+                app:layout_constraintRight_toLeftOf="@id/three"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@id/r1"-->
-            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+            <TextView
+                android:id="@+id/three"
+                style="@style/NumberButton"
+                android:text="3"
+                app:layout_constraintLeft_toRightOf="@id/two"
+                app:layout_constraintRight_toLeftOf="@id/four"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/r3"-->
-            <!--style="@style/BoardStyle"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
+            <TextView
+                android:id="@+id/four"
+                style="@style/NumberButton"
+                android:text="4"
+                app:layout_constraintLeft_toRightOf="@id/three"
+                app:layout_constraintRight_toLeftOf="@id/five"
+                app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/five"
+                style="@style/NumberButton"
+                android:text="5"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/four"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <!--app:itemBinding="@{vm.binding}"-->
-            <!--app:items="@{vm.cells3}"-->
-            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
-            <!--app:layout_constraintBottom_toTopOf="@id/r4"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@id/r2"-->
-            <!---->
-            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+            <TextView
+                android:id="@+id/six"
+                style="@style/NumberButton"
+                android:text="6"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/seven"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/one" />
 
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/r4"-->
-            <!--style="@style/BoardStyle"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--app:itemBinding="@{vm.binding}"-->
-            <!--app:items="@{vm.cells4}"-->
-            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
+            <TextView
+                android:id="@+id/seven"
+                style="@style/NumberButton"
+                android:text="7"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/six"
+                app:layout_constraintRight_toLeftOf="@id/eight"
+                app:layout_constraintTop_toBottomOf="@id/two" />
 
-            <!--app:layout_constraintBottom_toTopOf="@id/r5"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!---->
-            <!--app:layout_constraintTop_toBottomOf="@id/r3"-->
-            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+            <TextView
+                android:id="@+id/eight"
+                style="@style/NumberButton"
+                android:text="8"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/seven"
+                app:layout_constraintRight_toLeftOf="@id/nine"
+                app:layout_constraintTop_toBottomOf="@id/three" />
 
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/r5"-->
-            <!--style="@style/BoardStyle"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
+            <TextView
+                android:id="@+id/nine"
+                style="@style/NumberButton"
+                android:text="9"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/eight"
+                app:layout_constraintRight_toLeftOf="@id/pencil"
+                app:layout_constraintTop_toBottomOf="@id/four" />
 
-            <!--app:itemBinding="@{vm.binding}"-->
-            <!--app:items="@{vm.cells5}"-->
-            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
-            <!--app:layout_constraintBottom_toTopOf="@id/r6"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@id/r4"-->
-            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/r6"-->
-            <!--style="@style/BoardStyle"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--app:itemBinding="@{vm.binding}"-->
-            <!--app:items="@{vm.cells6}"-->
-            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
-            <!--app:layout_constraintBottom_toTopOf="@id/r7"-->
-
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@id/r5"-->
-            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/r7"-->
-            <!--style="@style/BoardStyle"-->
-            <!--android:layout_width="0dp"-->
-
-            <!--android:layout_height="0dp"-->
-            <!--app:itemBinding="@{vm.binding}"-->
-            <!--app:items="@{vm.cells7}"-->
-            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
-            <!--app:layout_constraintBottom_toTopOf="@id/r8"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@id/r6"-->
-            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/r8"-->
-            <!--style="@style/BoardStyle"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-
-            <!--app:itemBinding="@{vm.binding}"-->
-            <!--app:items="@{vm.cells8}"-->
-            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
-            <!--app:layout_constraintBottom_toTopOf="@id/r9"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@id/r7"-->
-            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
-
-            <!--<android.support.v7.widget.RecyclerView-->
-            <!--android:id="@+id/r9"-->
-            <!--style="@style/BoardStyle"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="0dp"-->
-            <!--app:itemBinding="@{vm.binding}"-->
-            <!--app:items="@{vm.cells9}"-->
-            <!--app:layoutManager="@{LayoutManagers.linear(LinearLayoutManager.HORIZONTAL, true)}"-->
-
-            <!--app:layout_constraintBottom_toBottomOf="parent"-->
-            <!--app:layout_constraintEnd_toEndOf="parent"-->
-            <!--app:layout_constraintStart_toStartOf="parent"-->
-            <!--app:layout_constraintTop_toBottomOf="@id/r8"-->
-            <!--app:layout_constraintVertical_chainStyle="spread_inside" />-->
+            <ImageView
+                android:id="@+id/pencil"
+                style="@style/NumberButton"
+                android:padding="15dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/nine"
+                app:srcCompat="@drawable/ic_edit" />
         </android.support.constraint.ConstraintLayout>
+
 
     </android.support.constraint.ConstraintLayout>
 </layout>

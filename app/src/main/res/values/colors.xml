@@ -9,4 +9,19 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="odd_cell">#21CCCCCC</color>
+    <color name="even_cell">#172b2b2b</color>
+    <color name="toolbar_background">#CCA061</color>
+    <color name="board_background">#087AFF00</color>
+    <color name="background_gradient_top">#F9D69F</color>
+    <color name="background_gradient_bottom">#E09D46</color>
+    <color name="text_color">#bc2b2b2b</color>
+    <color name="button_top">#18D0FACF</color>
+    <color name="button_bottom">#18ffffff</color>
 </resources>
+<!--
+13% = 21
+9% = 17
+3% = 8
+-->

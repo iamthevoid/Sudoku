@@ -14,27 +14,21 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/mainBackground"
         tools:context="iam.thevoid.sudoku.pages.GameActivity">
 
-<android.support.constraint.ConstraintLayout
-    android:layout_width="0dp"
-    app:layout_constraintDimensionRatio="H,1:1"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    android:layout_height="0dp">
-    <android.support.v7.widget.RecyclerView
-        style="@style/BoardStyle"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:itemBinding="@{vm.binding}"
-        app:items="@{vm.cells}"
-        app:layoutManager="@{LayoutManagers.grid(9)}" />
 
-</android.support.constraint.ConstraintLayout>
+
+        <iam.thevoid.sudoku.widget.BoardRecyclerView
+            android:id="@+id/recycler"
+            style="@style/BoardStyle"
+            decoration="@{vm.decoration(@dimen/thick_line, @dimen/thin_line)}"
+            android:layout_margin="25dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:itemBinding="@{vm.binding}"
+            app:items="@{vm.cells}"
+            app:layoutManager="@{LayoutManagers.grid(9)}"
+            />
+
     </android.support.constraint.ConstraintLayout>
 </layout>

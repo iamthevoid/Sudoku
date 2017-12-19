@@ -4,17 +4,45 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@drawable/main_background</item>
     </style>
 
     <style name="CellText">
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">20dp</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>
+    <style name="NumberButton">
+        <item name="android:clickable">true</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:background">@drawable/button_bckg</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:textSize">28dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">6dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">62dp</item>
+    </style>
+    <style name="CellHintText">
+        <item name="android:layout_marginTop">2dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginLeft">6dp</item>
+        <item name="android:layout_marginRight">6dp</item>
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:gravity">center</item>
+        <item name="android:visibility">gone</item>
+        <item name="android:textSize">10dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
     <style name="BoardStyle">
-        <item name="android:layout_margin">8dp</item>
+        <item name="android:padding">0dp</item>
         <item name="android:overScrollMode">never</item>
-        <item name="android:padding">1dp</item>
+        <item name="android:background">@color/board_background</item>
+    </style>
+    <style name="BoardBackground">
+        <item name="android:layout_margin">8dp</item>
         <item name="android:background">@color/cellDividers</item>
     </style>
 
