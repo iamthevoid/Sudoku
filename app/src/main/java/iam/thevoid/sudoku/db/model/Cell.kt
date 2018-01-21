@@ -9,28 +9,19 @@ import io.realm.annotations.PrimaryKey
 /**
  * Created by iam on 07/09/2017.
  */
-open class Cell : RealmObject(), DbEntity {
+open class Cell(var x: Int = 0, var y: Int = 0, var number: Int = 0, var insertedNumber: Int = 0) : RealmObject(), DbEntity {
 
     @PrimaryKey
     override var id: Long = 0
-
-    @SerializedName("number")
-    var number: Int = 0
-    @SerializedName("x")
-    var x: Int = 0
-    @SerializedName("y")
-    var y: Int = 0
-
-    @SerializedName("inserted_number")
-    var insertedNumber: Int = 0
 
     var selected = false
     var sameColor = false
     var wrong = false
 
-    fun isOddBlock(): Boolean {
-        val xMod = x / 3
-        val yMod = y / 3
-        return (xMod % 2 == 0 && yMod % 2 == 0) || xMod == yMod
-    }
+    val isOddBlock: Boolean
+        get() {
+            val xMod = x / 3
+            val yMod = y / 3
+            return (xMod % 2 == 0 && yMod % 2 == 0) || xMod == yMod
+        }
 }

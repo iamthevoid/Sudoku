@@ -1,11 +1,11 @@
 package iam.thevoid.sudoku.viewmodel
 
+import android.content.Context
 import android.databinding.ObservableInt
-import iam.thevoid.sudoku.App
 import iam.thevoid.sudoku.db.DbHandler
 import iam.thevoid.sudoku.db.model.Board
 import iam.thevoid.sudoku.pages.MenuActivity
-import iam.thevoid.sudoku.util.FileUtil
+import iam.thevoid.sudoku.util.extractFiles
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
@@ -16,20 +16,20 @@ class SplashViewModel : ViewModel() {
 
     val percent: ObservableInt = ObservableInt(0);
 
-    override fun init() {
+    override fun init(context: Context) {
         val count = DbHandler.getDao(Board().javaClass).count { }
         if (count > 0) {
-            MenuActivity.start(App.instance)
+            MenuActivity.start(context)
         } else {
-            FileUtil.extractFiles(App.instance)
+            extractFiles(context)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .doOnComplete({ MenuActivity.start(App.instance) })
+                    .doOnComplete({ MenuActivity.start(context) })
                     .subscribe(percent::set)
         }
     }
 
-    override fun deinit() {
+    override fun deinit(context: Context) {
     }
 
 

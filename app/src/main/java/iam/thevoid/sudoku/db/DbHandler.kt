@@ -36,7 +36,7 @@ object DbHandler {
     }
 
     fun <T> create(entity: T) where T : RealmObject, T : DbEntity {
-        var dao: Dao<T> = Dao(entity.javaClass)
+        val dao: Dao<T> = Dao(entity.javaClass)
         dao.update(entity)
         close()
     }

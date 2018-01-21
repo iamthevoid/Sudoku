@@ -5,7 +5,7 @@ import android.content.Intent
 import iam.thevoid.sudoku.BR
 import iam.thevoid.sudoku.R
 import iam.thevoid.sudoku.databinding.MenuActivityBinding
-import iam.thevoid.sudoku.util.IntentUtils
+import iam.thevoid.sudoku.util.NEW_TASK_CLOSE_STACK
 import iam.thevoid.sudoku.viewmodel.MenuViewModel
 
 /**
@@ -27,7 +27,7 @@ class MenuActivity : ViewModelActivity<MenuViewModel, MenuActivityBinding>() {
     companion object {
         fun start(context: Context) {
             context.startActivity(Intent(context, MenuActivity::class.java)
-                    .addFlags(IntentUtils.NEW_TASK_CLOSE_STACK))
+                    .addFlags(NEW_TASK_CLOSE_STACK))
         }
     }
 

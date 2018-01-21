@@ -10,7 +10,7 @@ import iam.thevoid.sudoku.db.model.Board
  * CHAR
  */
 
-fun Char.toInteger() : Int {
+fun Char.toIntVal() : Int {
     val res = toInt() - '0'.toInt()
     return if (res < 0 || res > 9) 0 else res
 }

@@ -51,11 +51,7 @@ class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
                 val any = field.get(entity) ?: continue
 
                 val value = any as RealmList<T>
-                for (entity in value) {
-                    if (entity is DbEntity) {
-                        prepareCreateOrUpdate(entity)
-                    }
-                }
+                value.forEach { prepareCreateOrUpdate(entity) }
             }
         }
     }

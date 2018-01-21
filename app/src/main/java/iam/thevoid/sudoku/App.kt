@@ -10,12 +10,7 @@ class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this
         DbHandler.init(this)
     }
 
-    companion object {
-        lateinit var instance: App
-            private set
-    }
 }

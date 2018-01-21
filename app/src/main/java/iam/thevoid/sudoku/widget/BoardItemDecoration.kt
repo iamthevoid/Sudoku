@@ -9,21 +9,14 @@ import android.view.View
 /**
  * Created by iam on 12.11.17.
  */
-class BoardItemDecoration(thick: Float, thin: Float) : RecyclerView.ItemDecoration() {
+class BoardItemDecoration(private val thick: Float, private val thin: Float) : RecyclerView.ItemDecoration() {
 
-    val thickPaint: Paint
-    val thinPaint: Paint
-
-    val thickLine : Float;
-    val thinLine : Float;
+    private val thickPaint: Paint = Paint()
+    private val thinPaint: Paint = Paint()
 
     init {
-        this.thickLine = thick
-        this.thinLine = thin
-        thickPaint = Paint()
         thickPaint.color = Color.BLACK
         thickPaint.strokeWidth = thick
-        thinPaint = Paint()
         thinPaint.color = Color.BLACK
         thinPaint.strokeWidth = thin
     }
@@ -44,9 +37,7 @@ class BoardItemDecoration(thick: Float, thin: Float) : RecyclerView.ItemDecorati
                 dim = w.toFloat()
             }
 
-
-
-            val offset = thickLine / 2
+            val offset = thick / 2
 
             if (i != 0 && i != 9) {
                 if (i % 3 == 0) {
@@ -65,7 +56,6 @@ class BoardItemDecoration(thick: Float, thin: Float) : RecyclerView.ItemDecorati
             }
         }
 
-//       canvas.drawLine(0f, 1f, 0f, canvas.height.toFloat(), paint)
         super.onDraw(canvas, parent, state)
     }
 }

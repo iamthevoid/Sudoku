@@ -27,10 +27,6 @@ class SquareFrameLayout @JvmOverloads constructor(
         }
         super.onMeasure(ws, hs)
     }
-
-    override fun onDraw(canvas: Canvas?) {
-        super.onDraw(canvas)
-    }
 }
 
 // Small hack to fix overscroll

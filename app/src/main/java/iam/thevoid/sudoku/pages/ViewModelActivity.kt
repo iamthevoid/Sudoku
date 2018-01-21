@@ -13,49 +13,47 @@ import iam.thevoid.sudoku.viewmodel.ViewModel
  * Created by iam on 07/09/2017.
  */
 @SuppressLint("Registered")
-open abstract class ViewModelActivity <VM, VB> : BaseActivity() where VM : ViewModel, VB : ViewDataBinding {
+open abstract class ViewModelActivity<VM, VB> : BaseActivity() where VM : ViewModel, VB : ViewDataBinding {
 
-    abstract fun layoutId() : Int
+    abstract fun layoutId(): Int
 
-    abstract fun variableId() : Int
+    abstract fun variableId(): Int
 
-    abstract fun viewModel() : VM
+    abstract fun viewModel(): VM
 
-    private var viewModel : VM? = null
-    private var viewBinding : VB? = null
-
-
-
+    lateinit private var viewModel: VM
+    lateinit private var viewBinding: VB
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewBinding = DataBindingUtil.setContentView(this, layoutId())
         viewModel = viewModel()
-        viewBinding!!.setVariable(variableId(), viewModel)
-        viewModel!!.onCreate()
+        viewBinding.setVariable(variableId(), viewModel)
+        viewModel.onCreate(this)
     }
 
     override fun onStart() {
         super.onStart()
-        viewModel!!.onStart()
+        viewModel.onStart(this)
     }
 
     override fun onResume() {
         super.onResume()
-        viewModel!!.onResume()
+        viewModel.onResume(this)
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel!!.onPause()
+        viewModel.onPause(this)
     }
 
     override fun onStop() {
         super.onStop()
-        viewModel!!.onStop()
+        viewModel.onStop(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        viewModel!!.onDestroy()
+        viewModel.onDestroy(this)
     }
 }

@@ -7,7 +7,7 @@ import io.realm.annotations.PrimaryKey
 /**
  * Created by iam on 09/09/2017.
  */
-open interface DbEntity {
+interface DbEntity {
 
     var id: Long
 

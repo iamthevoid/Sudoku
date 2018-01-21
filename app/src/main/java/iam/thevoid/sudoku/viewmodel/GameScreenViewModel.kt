@@ -36,7 +36,6 @@ class GameScreenViewModel {
         board = DbHandler.getDao(Board::class.java).findFirstAndClose { equalTo("isStarted", true) }
         board?.cells?.let {
             cells.addAll(it)
-//            }
         }
 
         Observable.interval(0, 1, TimeUnit.SECONDS)
