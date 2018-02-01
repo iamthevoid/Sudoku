@@ -1,40 +1,43 @@
 package iam.thevoid.sudoku.db
 
+import iam.thevoid.sudoku.R
 import iam.thevoid.sudoku.db.model.Board
 import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.RealmQuery
+import java.lang.reflect.Field
 import java.util.concurrent.atomic.AtomicLong
 import kotlin.reflect.KVisibility
+import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.memberProperties
 
 
 /**
  * Created by iam on 09/09/2017.
  */
-class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
+class Dao<T>(private val cls: Class<T>) where T : RealmObject, T : DbEntity {
 
     companion object {
         var incrementalId: AtomicLong = AtomicLong(0)
     }
 
-    fun query() : RealmQuery<T> {
+    fun query(): RealmQuery<T> {
         return DbHandler.getRealm().where(cls)
     }
 
-    fun count() : Int {
+    fun count(): Int {
         val c = query().count()
         DbHandler.close()
         return c.toInt()
     }
 
-    infix fun count(applyQuery : RealmQuery<T>.() -> Unit) : Int {
+    infix fun count(applyQuery: RealmQuery<T>.() -> Unit): Int {
         val c = query().apply(applyQuery).count()
         DbHandler.close()
         return c.toInt()
     }
 
-    infix fun findFirstAndClose(applyQuery : RealmQuery<T>.() -> Unit): T? {
+    infix fun findFirstAndClose(applyQuery: RealmQuery<T>.() -> Unit): T? {
         val entity = clone(query().apply(applyQuery).findFirst())
         DbHandler.close()
         return entity
@@ -48,22 +51,28 @@ class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
 
     @Suppress("unchecked_cast")
     private fun prepareCreateOrUpdateInternalItems(entity: T) {
-        var cls = entity.javaClass
-        for (field in cls.declaredFields) {
-            if (field.type is DbEntity) {
-                val fieldValue = Any()
-                field.get(fieldValue)
-                prepareCreateOrUpdate(fieldValue as T)
-            } else if (field.type == RealmList<T>().javaClass) {
-                field.isAccessible = true
-
-                val any = field.get(entity) ?: continue
-
-                val value = any as? RealmList<T>
-                value?.forEach { prepareCreateOrUpdate(it) }
+        entity.javaClass.declaredFields.forEach {
+            val kClass = it.type.kotlin
+            when {
+                kClass.isSubclassOf(DbEntity::class) -> {
+                    prepareCreateOrUpdate(it.get(entity) as T)
+                }
+                kClass.isSubclassOf(RealmList::class) -> {
+                    val list : RealmList<*>? = it.get(entity) as? RealmList<*>
+                    list?.forEach {
+                        if (it is DbEntity && it is RealmObject)
+                            prepareCreateOrUpdate(it as T)
+                    }
+                }
             }
         }
     }
+
+    private fun <R> cast(field: Field): R {
+        field.isAccessible = true
+        return field.type.kotlin.objectInstance as R
+    }
+
 
     private fun resolveId(entity: T) {
         if (entity.resolveId() == 0L) {
