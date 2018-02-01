@@ -46,19 +46,21 @@ class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
         prepareCreateOrUpdateInternalItems(entity)
     }
 
-    @SuppressWarnings("unchecked")
+    @Suppress("unchecked_cast")
     private fun prepareCreateOrUpdateInternalItems(entity: T) {
         var cls = entity.javaClass
         for (field in cls.declaredFields) {
             if (field.type is DbEntity) {
-                prepareCreateOrUpdate(entity)
+                val fieldValue = Any()
+                field.get(fieldValue)
+                prepareCreateOrUpdate(fieldValue as T)
             } else if (field.type == RealmList<T>().javaClass) {
                 field.isAccessible = true
 
                 val any = field.get(entity) ?: continue
 
                 val value = any as? RealmList<T>
-                value?.forEach { prepareCreateOrUpdate(entity) }
+                value?.forEach { prepareCreateOrUpdate(it) }
             }
         }
     }

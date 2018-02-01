@@ -6,9 +6,7 @@ import com.orhanobut.hawk.Hawk
  * Created by iam on 12/09/2017.
  */
 object SecurityStore {
-
-
-
+    
     fun <T> put(key : String, o : T) {
         Hawk.put(key, o)
     }
