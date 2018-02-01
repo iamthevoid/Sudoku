@@ -17,11 +17,10 @@ class SplashViewModel : ViewModel() {
     val percent: ObservableInt = ObservableInt(0);
 
     override fun init(context: Context) {
-        val count = DbHandler.getDao(Board().javaClass).count { }
-        if (count > 0) {
-            MenuActivity.start(context)
-        } else {
-            extractFiles(context)
+        val count = DbHandler.getDao(Board().javaClass).count()
+        when {
+            count > 0 -> MenuActivity.start(context)
+            else -> extractFiles(context)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .doOnComplete({ MenuActivity.start(context) })

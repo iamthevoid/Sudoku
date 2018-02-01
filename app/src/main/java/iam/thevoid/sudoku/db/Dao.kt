@@ -22,13 +22,19 @@ class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
         return DbHandler.getRealm().where(cls)
     }
 
-    fun count(applyQuery : RealmQuery<T>.() -> Unit) : Int {
-        val c = query().apply(applyQuery).findAll().count()
+    fun count() : Int {
+        val c = query().count()
         DbHandler.close()
-        return c
+        return c.toInt()
     }
 
-    fun findFirstAndClose(applyQuery : RealmQuery<T>.() -> Unit): T? {
+    infix fun count(applyQuery : RealmQuery<T>.() -> Unit) : Int {
+        val c = query().apply(applyQuery).count()
+        DbHandler.close()
+        return c.toInt()
+    }
+
+    infix fun findFirstAndClose(applyQuery : RealmQuery<T>.() -> Unit): T? {
         val entity = clone(query().apply(applyQuery).findFirst())
         DbHandler.close()
         return entity
@@ -40,6 +46,7 @@ class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
         prepareCreateOrUpdateInternalItems(entity)
     }
 
+    @SuppressWarnings("unchecked")
     private fun prepareCreateOrUpdateInternalItems(entity: T) {
         var cls = entity.javaClass
         for (field in cls.declaredFields) {
@@ -50,15 +57,14 @@ class Dao<T> (private val cls: Class<T>) where T : RealmObject, T : DbEntity {
 
                 val any = field.get(entity) ?: continue
 
-                val value = any as RealmList<T>
-                value.forEach { prepareCreateOrUpdate(entity) }
+                val value = any as? RealmList<T>
+                value?.forEach { prepareCreateOrUpdate(entity) }
             }
         }
     }
 
     private fun resolveId(entity: T) {
-        val id = entity.resolveId()
-        if (id == 0L) {
+        if (entity.resolveId() == 0L) {
             entity.id = incrementalId.incrementAndGet()
         }
     }

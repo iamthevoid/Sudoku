@@ -23,7 +23,7 @@ class GameScreenViewModel {
 
     var board: Board? = null
 
-    var millis : ObservableLong = ObservableLong(0);
+    var millis : ObservableLong = ObservableLong(0)
 
     fun decoration(thick: Float, thin : Float) : RecyclerView.ItemDecoration {
         return BoardItemDecoration(thick, thin)
@@ -33,7 +33,8 @@ class GameScreenViewModel {
     val binding: ItemBinding<Cell> = ItemBinding.of(BR.item, R.layout.cell)
 
     fun onInit() {
-        board = DbHandler.getDao(Board::class.java).findFirstAndClose { equalTo("isStarted", true) }
+        board = DbHandler.getDao(Board::class.java) findFirstAndClose
+                { equalTo("isStarted", true) }
         board?.cells?.let {
             cells.addAll(it)
         }

@@ -36,10 +36,10 @@ fun setIntText(view: TextView, text: Int) {
 
 @BindingAdapter("hour_time")
 fun setIntText(view: TextView, time: Long) {
-    var seclen = time / 1000
-    var hour = seclen / 3600
-    var min = (seclen - hour * 3600) / 60
-    var sec = (seclen - hour * 3600 - min * 60)
+    val seclen = time / 1000
+    val hour = seclen / 3600
+    val min = (seclen - hour * 3600) / 60
+    val sec = (seclen - hour * 3600 - min * 60)
     view.text = String.format("%02d:%02d:%02d", hour, min, sec)
 }
 

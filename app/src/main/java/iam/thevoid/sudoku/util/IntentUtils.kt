@@ -9,13 +9,14 @@ import android.content.Intent
  * Created by iam on 07/09/2017.
  */
 
+object Intent {
     val NEW_TASK_CLOSE_STACK = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+}
 
-    fun getActivity(context: Context): Activity {
-        if (context is Activity) {
-            return context
-        } else if (context is ContextWrapper) {
-            return getActivity(context.baseContext)
-        }
-        throw IllegalStateException("Context $context NOT contains activity!")
+fun getActivity(context: Context): Activity {
+    return when (context) {
+        is Activity -> context
+        is ContextWrapper -> getActivity(context)
+        else -> throw IllegalStateException("Context $context NOT contains activity!")
     }
+}

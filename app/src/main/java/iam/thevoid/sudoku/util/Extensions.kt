@@ -10,7 +10,7 @@ import iam.thevoid.sudoku.db.model.Board
  * CHAR
  */
 
-fun Char.toIntVal() : Int {
+fun Char.toIntVal(): Int {
     val res = toInt() - '0'.toInt()
     return if (res < 0 || res > 9) 0 else res
 }
@@ -19,13 +19,7 @@ fun Char.toIntVal() : Int {
  * BOARD
  */
 
-fun Board.isAllCellsFilled() : Boolean {
-    cells?.forEach {
-        if (it.insertedNumber == 0) {
-            return false
-        }
-    }
-
-    return true
+fun Board.isAllCellsFilled(): Boolean {
+    return cells.none { it.insertedNumber == 0 }
 }
 

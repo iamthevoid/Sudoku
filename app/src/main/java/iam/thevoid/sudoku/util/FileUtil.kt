@@ -16,22 +16,22 @@ import java.util.regex.Pattern
 
 fun extractAssets(context: Context, listener: (percent: Int) -> Unit) {
 
-    val inputStream = context.getAssets().open("boards")
+    val inputStream = context.assets.open("boards")
 
-    val data = inputStream.bufferedReader().use {
-        it.readText()
-    }
+    val data = inputStream.bufferedReader().use { it.readText() }
 
     inputStream.close()
 
     val dataArr = data.split(Pattern.compile("\n"))
 
     for (i in dataArr.indices) {
+
         val b = Board()
         val line = dataArr[i]
         if (line.length != 164) continue
 
         b.cellsData = line
+
         DbHandler.create(b)
 
         listener((((i + 1).toFloat() / dataArr.size.toFloat()) * 100F).toInt())
@@ -39,10 +39,8 @@ fun extractAssets(context: Context, listener: (percent: Int) -> Unit) {
 }
 
 fun extractFiles(context: Context): Observable<Int> {
-    return Observable.create { e: ObservableEmitter<Int> ->
-        run {
-            extractAssets(context, { percent -> e.onNext(percent) })
-            e.onComplete()
-        }
+    return Observable.create {
+        extractAssets(context) { percent -> it.onNext(percent) }
+        it.onComplete()
     }
 }

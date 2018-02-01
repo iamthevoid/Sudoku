@@ -6,15 +6,12 @@ import android.view.View
 import iam.thevoid.sudoku.db.DbHandler
 import iam.thevoid.sudoku.db.model.Board
 import iam.thevoid.sudoku.pages.GameActivity
-import iam.thevoid.sudoku.util.ToastUtil
 import iam.thevoid.sudoku.util.getActivity
+import iam.thevoid.sudoku.util.showToast
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-/**
- * Created by iam on 16/09/2017.
- */
 class MenuViewModel : ViewModel() {
 
     val loading = ObservableBoolean(false)
@@ -22,16 +19,15 @@ class MenuViewModel : ViewModel() {
     val isGameStarted = ObservableBoolean(false)
 
     val onStartClick = View.OnClickListener { view ->
-        val board = DbHandler.getDao(Board::class.java).findFirstAndClose({ })
+        val board = DbHandler.getDao(Board::class.java) findFirstAndClose { }
+
         if (board == null) {
-            ToastUtil.show(view.context, "Error, boards is end")
+            showToast(view.context, "Error, boards is end")
         } else {
             loading.set(true)
-            Observable.create<Boolean> { e ->
-                run {
-                    board.start()
-                    e.onNext(true)
-                }
+            Observable.create<Boolean> {
+                board.start()
+                it.onNext(true)
             }.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
@@ -41,19 +37,13 @@ class MenuViewModel : ViewModel() {
         }
     }
 
-    val onResumeClick = View.OnClickListener { view ->
-        GameActivity.start(view.context)
-    }
+    val onResumeClick = View.OnClickListener { GameActivity.start(it.context) }
 
-    val onExitClick = View.OnClickListener { view ->
-        getActivity(view.context).finish()
-    }
+    val onExitClick = View.OnClickListener { getActivity(it.context).finish() }
 
-    val onOptionsClick = View.OnClickListener { view ->
-    }
+    val onOptionsClick = View.OnClickListener {}
 
-    val onStatisticsClick = View.OnClickListener { view ->
-    }
+    val onStatisticsClick = View.OnClickListener {}
 
 
     override fun deinit(context: Context) {
