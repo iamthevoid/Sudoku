@@ -13,7 +13,7 @@ import iam.thevoid.sudoku.viewmodel.ViewModel
  * Created by iam on 07/09/2017.
  */
 @SuppressLint("Registered")
-open abstract class ViewModelActivity<VM, VB> : BaseActivity() where VM : ViewModel, VB : ViewDataBinding {
+abstract class ViewModelActivity<VM, VB> : BaseActivity() where VM : ViewModel, VB : ViewDataBinding {
 
     abstract fun layoutId(): Int
 
@@ -21,8 +21,8 @@ open abstract class ViewModelActivity<VM, VB> : BaseActivity() where VM : ViewMo
 
     abstract fun viewModel(): VM
 
-    lateinit private var viewModel: VM
-    lateinit private var viewBinding: VB
+    private lateinit var viewModel: VM
+    private lateinit var viewBinding: VB
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

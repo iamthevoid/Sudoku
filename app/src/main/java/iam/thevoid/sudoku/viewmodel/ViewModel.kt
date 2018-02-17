@@ -5,7 +5,7 @@ import android.content.Context
 /**
  * Created by iam on 16/09/2017.
  */
-open abstract class ViewModel : LifecycleCallbacks {
+abstract class ViewModel : LifecycleCallbacks {
 
     abstract fun init(context: Context)
     abstract fun deinit(context: Context)

@@ -7,14 +7,16 @@
 
         <variable
             name="item"
-            type="iam.thevoid.sudoku.db.model.Cell" />
+            type="iam.thevoid.sudoku.widget.CellGameWrapper" />
     </data>
 
     <iam.thevoid.sudoku.widget.SquareFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
+        android:clickable="true"
+        android:foreground="@{item.foreground(context)}"
         android:layout_height="wrap_content"
-        android:background="@{item.isOddBlock() ? @color/odd_cell : @color/even_cell}">
+        android:background="@{item.color(context)}">
 
 
         <TextView
@@ -24,7 +26,7 @@
             app:intText="@{item.insertedNumber}"
             app:type="@{View.INVISIBLE}"
             app:visibile="@{item.insertedNumber != 0}"
-            tools:text="0" />
+            android:text="0" />
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

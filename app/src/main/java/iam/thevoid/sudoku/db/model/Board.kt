@@ -40,8 +40,8 @@ open class Board : RealmObject(), DbEntity {
 
             sudokuNums.indices.mapTo(cells) {
                 Cell(
-                        it / 9,
                         it % 9,
+                        it / 9,
                         nums[it].toIntVal(),
                         gameNumbers[it].toIntVal()
                 )

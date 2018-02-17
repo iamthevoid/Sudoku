@@ -10,6 +10,8 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <color name="same_num_cell">#44444444</color>
+    <color name="selected_cell">#cc009f40</color>
     <color name="odd_cell">#21CCCCCC</color>
     <color name="even_cell">#172b2b2b</color>
     <color name="toolbar_background">#CCA061</color>

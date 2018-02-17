@@ -14,14 +14,7 @@ open class Cell(var x: Int = 0, var y: Int = 0, var number: Int = 0, var inserte
     @PrimaryKey
     override var id: Long = 0
 
-    var selected = false
-    var sameColor = false
-    var wrong = false
-
-    val isOddBlock: Boolean
-        get() {
-            val xMod = x / 3
-            val yMod = y / 3
-            return (xMod % 2 == 0 && yMod % 2 == 0) || xMod == yMod
-        }
+    override fun toString(): String {
+        return "x = $x, y = $y, number = $number, insertedNumber = $insertedNumber"
+    }
 }

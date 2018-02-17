@@ -15,15 +15,18 @@
     </style>
     <style name="NumberButton">
         <item name="android:clickable">true</item>
-        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:foreground">?attr/actionBarItemBackground</item>
         <item name="android:background">@drawable/button_bckg</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">28dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:layout_margin">6dp</item>
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">62dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+    </style>
+    <style name="ImageButton" parent="NumberButton">
+        <item name="android:padding">8dp</item>
     </style>
     <style name="CellHintText">
         <item name="android:layout_marginTop">2dp</item>

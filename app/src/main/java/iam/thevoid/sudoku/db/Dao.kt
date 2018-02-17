@@ -68,12 +68,6 @@ class Dao<T>(private val cls: Class<T>) where T : RealmObject, T : DbEntity {
         }
     }
 
-    private fun <R> cast(field: Field): R {
-        field.isAccessible = true
-        return field.type.kotlin.objectInstance as R
-    }
-
-
     private fun resolveId(entity: T) {
         if (entity.resolveId() == 0L) {
             entity.id = incrementalId.incrementAndGet()

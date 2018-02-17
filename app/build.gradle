@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-kapt'
+
 apply plugin: 'kotlin-android-extensions'
 
 apply plugin: 'realm-android'
@@ -14,13 +16,13 @@ allprojects {
 
 
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "iam.thevoid.sudoku"
         minSdkVersion 16
-        targetSdkVersion 26
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -64,8 +66,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     // Support lib
-    implementation "com.android.support:appcompat-v7:$supportVersion"
-    implementation "com.android.support:recyclerview-v7:$supportVersion"
+    implementation "com.android.support:support-v4:27.0.2"
+    implementation "com.android.support:appcompat-v7:27.0.2"
+    implementation "com.android.support:recyclerview-v7:27.0.2"
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     implementation 'com.orhanobut:hawk:2.0.1'
@@ -75,10 +78,9 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     // Data binding
-    kapt "com.android.databinding:compiler:3.1.0-alpha01"
+    kapt 'com.android.databinding:compiler:3.0.1'
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0'
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'
-
 
     // test
 //    testImplementation 'junit:junit:4.12'
