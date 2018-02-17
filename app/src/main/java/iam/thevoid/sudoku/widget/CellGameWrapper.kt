@@ -1,23 +1,33 @@
 package iam.thevoid.sudoku.widget
 
 import android.content.Context
+import android.databinding.BaseObservable
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import iam.thevoid.sudoku.R
 import iam.thevoid.sudoku.db.model.Cell
+import kotlin.reflect.KProperty
 
 /**
  * Created by alese_000 on 09.02.2018.
  */
-class CellGameWrapper(private val cell: Cell) {
+class CellGameWrapper(private val cell: Cell) : BaseObservable() {
 
     var selected = false
+        set(value) {
+            field = value
+            notifyChange()
+        }
 
     var sameNumber = false
+        set (value) {
+            field = value
+            notifyChange()
+        }
 
     var wrong = false
 
-    val insertedNumber: Int by lazy { cell.insertedNumber }
+    var insertedNumber: Int by cell.insertedNumber
 
     val isOddBlock: Boolean
         get() {
@@ -26,7 +36,7 @@ class CellGameWrapper(private val cell: Cell) {
             return (xMod % 2 == 0 && yMod % 2 == 0) || xMod == yMod
         }
 
-    fun color(context : Context): Int {
+    fun color(context: Context): Int {
         return when {
             selected -> ContextCompat.getColor(context, R.color.selected_cell)
             sameNumber -> ContextCompat.getColor(context, R.color.same_num_cell)
@@ -35,7 +45,7 @@ class CellGameWrapper(private val cell: Cell) {
         }
     }
 
-    fun foreground(context : Context): Drawable? {
+    fun foreground(context: Context): Drawable? {
         return ContextCompat.getDrawable(context, when {
             cell.x % 3 == 0 && cell.y % 3 == 0 -> R.drawable.cell_foreground_top_left_thick
             cell.x % 3 == 0 && cell.y % 3 == 1 -> R.drawable.cell_foreground_left_thick
@@ -50,4 +60,12 @@ class CellGameWrapper(private val cell: Cell) {
         })
     }
 
+    private operator fun Int.setValue(thisRef: CellGameWrapper, property: KProperty<*>, value: Int) {
+        thisRef.cell.insertedNumber = value
+        notifyChange()
+    }
+
+    private operator fun Int.getValue(thisRef: CellGameWrapper, property: KProperty<*>) : Int {
+        return thisRef.cell.insertedNumber
+    }
 }

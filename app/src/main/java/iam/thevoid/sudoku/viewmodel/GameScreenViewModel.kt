@@ -4,12 +4,12 @@ import android.databinding.ObservableArrayList
 import android.databinding.ObservableLong
 import android.support.v7.widget.RecyclerView
 import android.view.View
+import android.widget.TextView
 import iam.thevoid.sudoku.BR
 import iam.thevoid.sudoku.ItemClickSupport
 import iam.thevoid.sudoku.R
 import iam.thevoid.sudoku.db.DbHandler
 import iam.thevoid.sudoku.db.model.Board
-import iam.thevoid.sudoku.util.showToast
 import iam.thevoid.sudoku.widget.BoardItemDecoration
 import iam.thevoid.sudoku.widget.CellGameWrapper
 import io.reactivex.Observable
@@ -35,9 +35,28 @@ class GameScreenViewModel {
 
     val onCellClickListener = object : ItemClickSupport.OnItemClick<CellGameWrapper> {
         override fun onItemClicked(recyclerView: RecyclerView, itemView: View, position: Int, item: CellGameWrapper) {
-            item.selected = true
-            cells[position] = item
+            selectItem(item)
         }
+    }
+
+    val onNumClickListener : View.OnClickListener = View.OnClickListener { v ->
+        if (v !is TextView) return@OnClickListener
+        val num = v.text.toString().toInt()
+        cells.filter { it.selected }.forEach {
+            it.insertedNumber = num
+            selectItem(it)
+        }
+    }
+
+    private fun selectItem(item : CellGameWrapper) {
+        cells.forEach {
+            it.selected = false
+            it.sameNumber = false
+        }
+        cells.filter {
+            it.insertedNumber == item.insertedNumber && it.insertedNumber != 0
+        }.forEach { it.sameNumber = true }
+        item.selected = true
     }
 
     fun onInit() {

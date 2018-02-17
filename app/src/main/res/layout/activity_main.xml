@@ -80,6 +80,7 @@
                 android:id="@+id/one"
                 style="@style/NumberButton"
                 android:text="1"
+                app:click="@{vm.onNumClickListener}"
                 app:layout_constraintBottom_toTopOf="@id/four"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -88,6 +89,7 @@
                 android:id="@+id/two"
                 style="@style/NumberButton"
                 android:text="2"
+                app:click="@{vm.onNumClickListener}"
                 app:layout_constraintBottom_toTopOf="@id/five"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/one"
@@ -97,6 +99,7 @@
                 android:id="@+id/three"
                 style="@style/NumberButton"
                 android:text="3"
+                app:click="@{vm.onNumClickListener}"
                 app:layout_constraintBottom_toTopOf="@id/six"
                 app:layout_constraintStart_toEndOf="@id/two"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -113,6 +116,7 @@
                 android:id="@+id/four"
                 style="@style/NumberButton"
                 android:text="4"
+                app:click="@{vm.onNumClickListener}"
                 app:layout_constraintBottom_toTopOf="@id/seven"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,6 +126,7 @@
                 android:id="@+id/five"
                 style="@style/NumberButton"
                 android:text="5"
+                app:click="@{vm.onNumClickListener}"
                 app:layout_constraintBottom_toTopOf="@id/eight"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/four"
@@ -131,6 +136,7 @@
                 android:id="@+id/six"
                 style="@style/NumberButton"
                 android:text="6"
+                app:click="@{vm.onNumClickListener}"
                 app:layout_constraintBottom_toTopOf="@id/nine"
                 app:layout_constraintStart_toEndOf="@id/five"
                 app:layout_constraintTop_toBottomOf="@id/three" />
@@ -146,6 +152,7 @@
                 android:id="@+id/seven"
                 style="@style/NumberButton"
                 android:text="7"
+                app:click="@{vm.onNumClickListener}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/four" />
@@ -154,6 +161,7 @@
                 android:id="@+id/eight"
                 style="@style/NumberButton"
                 android:text="8"
+                app:click="@{vm.onNumClickListener}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/seven"
@@ -163,6 +171,7 @@
                 android:id="@+id/nine"
                 style="@style/NumberButton"
                 android:text="9"
+                app:click="@{vm.onNumClickListener}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/eight"
                 app:layout_constraintTop_toBottomOf="@id/six" />
