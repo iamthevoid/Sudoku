@@ -16,7 +16,6 @@
     <style name="NumberButton">
         <item name="android:clickable">true</item>
         <item name="android:foreground">?attr/actionBarItemBackground</item>
-        <item name="android:background">@drawable/button_bckg</item>
         <item name="android:fontFamily">sans-serif-medium</item>
         <item name="android:textColor">@color/text_color</item>
         <item name="android:textSize">28dp</item>

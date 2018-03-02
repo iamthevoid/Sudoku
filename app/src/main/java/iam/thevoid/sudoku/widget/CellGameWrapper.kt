@@ -13,12 +13,6 @@ import kotlin.reflect.KProperty
  */
 class CellGameWrapper(private val cell: Cell) : BaseObservable() {
 
-    var selected = false
-        set(value) {
-            field = value
-            notifyChange()
-        }
-
     var sameNumber = false
         set (value) {
             field = value
@@ -38,8 +32,7 @@ class CellGameWrapper(private val cell: Cell) : BaseObservable() {
 
     fun color(context: Context): Int {
         return when {
-            selected -> ContextCompat.getColor(context, R.color.selected_cell)
-            sameNumber -> ContextCompat.getColor(context, R.color.same_num_cell)
+            sameNumber -> ContextCompat.getColor(context, R.color.selected_button)
             isOddBlock -> ContextCompat.getColor(context, R.color.odd_cell)
             else -> ContextCompat.getColor(context, R.color.even_cell)
         }

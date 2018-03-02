@@ -1,6 +1,7 @@
 package iam.thevoid.sudoku.viewmodel
 
 import android.databinding.ObservableArrayList
+import android.databinding.ObservableInt
 import android.databinding.ObservableLong
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -25,6 +26,8 @@ class GameScreenViewModel {
 
     var millis: ObservableLong = ObservableLong(0)
 
+    var selected: ObservableInt = ObservableInt(0)
+
     fun decoration(thick: Float, thin: Float): RecyclerView.ItemDecoration {
         return BoardItemDecoration(thick, thin)
     }
@@ -35,28 +38,25 @@ class GameScreenViewModel {
 
     val onCellClickListener = object : ItemClickSupport.OnItemClick<CellGameWrapper> {
         override fun onItemClicked(recyclerView: RecyclerView, itemView: View, position: Int, item: CellGameWrapper) {
-            selectItem(item)
+            item.insertedNumber = selected.get()
+            highlightItems()
         }
     }
 
     val onNumClickListener : View.OnClickListener = View.OnClickListener { v ->
         if (v !is TextView) return@OnClickListener
-        val num = v.text.toString().toInt()
-        cells.filter { it.selected }.forEach {
-            it.insertedNumber = num
-            selectItem(it)
-        }
+        val selected = v.text.toString().toInt()
+        this.selected.set(if (selected == this.selected.get()) 0 else selected)
+        highlightItems()
     }
 
-    private fun selectItem(item : CellGameWrapper) {
+    private fun highlightItems() {
         cells.forEach {
-            it.selected = false
             it.sameNumber = false
         }
         cells.filter {
-            it.insertedNumber == item.insertedNumber && it.insertedNumber != 0
+            it.insertedNumber == selected.get() && it.insertedNumber != 0
         }.forEach { it.sameNumber = true }
-        item.selected = true
     }
 
     fun onInit() {

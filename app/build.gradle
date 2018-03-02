@@ -82,6 +82,8 @@ dependencies {
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0'
     implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'
 
+    implementation project(':material-palette')
+
     // test
 //    testImplementation 'junit:junit:4.12'
 //
