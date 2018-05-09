@@ -4,6 +4,10 @@ import android.content.Context
 import iam.thevoid.sudoku.db.DbHandler
 import iam.thevoid.sudoku.db.model.Board
 import iam.thevoid.sudoku.db.model.Cell
+import iam.thevoid.sudoku.db.newdb.DbHelper
+import iam.thevoid.sudoku.db.newdb.entity.GameEntity
+import iam.thevoid.sudoku.db.newdb.enums.Difficulty
+import iam.thevoid.sudoku.db.newdb.models.Game
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import io.realm.RealmList
@@ -25,14 +29,11 @@ fun extractAssets(context: Context, listener: (percent: Int) -> Unit) {
     val dataArr = data.split(Pattern.compile("\n"))
 
     for (i in dataArr.indices) {
-
-        val b = Board()
         val line = dataArr[i]
         if (line.length != 164) continue
 
-        b.cellsData = line
-
-        DbHandler.create(b)
+        val gameDao = DbHelper.database.gameDao()
+        gameDao.insert(gameDao.create(line.substring(82, line.length - 1)))
 
         listener((((i + 1).toFloat() / dataArr.size.toFloat()) * 100F).toInt())
     }

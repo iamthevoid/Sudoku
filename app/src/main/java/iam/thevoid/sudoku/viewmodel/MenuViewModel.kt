@@ -31,13 +31,13 @@ class MenuViewModel : ViewModel() {
             }.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
-                        GameActivity.start(view.context)
+                        GameActivity.start(getActivity(view.context))
                         loading.set(false)
                     })
         }
     }
 
-    val onResumeClick = View.OnClickListener { GameActivity.start(it.context) }
+    val onResumeClick = View.OnClickListener { GameActivity.start(getActivity(it.context)) }
 
     val onExitClick = View.OnClickListener { getActivity(it.context).finish() }
 

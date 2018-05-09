@@ -16,7 +16,7 @@ JNICALL
 Java_iam_thevoid_sudoku_MainActivity_generate(
         JNIEnv *env,
         jobject /* this */) {
-    BoardGenerator boardGenerator;
-    boardGenerator.generate();
+//    BoardGenerator boardGenerator;
+//    boardGenerator.generate();
     return NULL;
 }

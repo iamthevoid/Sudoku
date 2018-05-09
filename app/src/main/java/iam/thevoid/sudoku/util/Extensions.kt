@@ -1,6 +1,13 @@
 package iam.thevoid.sudoku.util
 
-import iam.thevoid.sudoku.db.model.Board
+import android.text.Selection.selectAll
+import iam.thevoid.sudoku.db.newdb.DbHelper
+import iam.thevoid.sudoku.db.newdb.dao.ActionDao
+import iam.thevoid.sudoku.db.newdb.entity.CellEntity
+import iam.thevoid.sudoku.db.newdb.models.Action
+import iam.thevoid.sudoku.db.newdb.models.Game
+import io.reactivex.Flowable
+import java.util.*
 
 /**
  * Created by iam on 08/09/2017.
@@ -16,10 +23,18 @@ fun Char.toIntVal(): Int {
 }
 
 /**
- * BOARD
+ * GAME
  */
 
-fun Board.isAllCellsFilled(): Boolean {
-    return cells.none { it.insertedNumber == 0 }
+fun Game.createCells() {
+    val cells = ArrayList<CellEntity>()
+    for (num in contents.toCharArray().indices) {
+        cells.add(CellEntity(
+                contents[num].toIntVal(),
+                id,
+                num % 9,
+                num / 9
+        ))
+    }
+    DbHelper.database.cellDao().insert(cells)
 }
-

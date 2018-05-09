@@ -1,5 +1,6 @@
 package iam.thevoid.sudoku.pages
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.databinding.DataBindingUtil
@@ -33,7 +34,7 @@ class GameActivity : BaseActivity() {
 
     companion object {
 
-        fun start(context: Context) {
+        fun start(context: Activity) {
             context.startActivity(Intent(context, GameActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
         }

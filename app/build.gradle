@@ -1,24 +1,25 @@
 apply plugin: 'com.android.application'
 
-apply plugin: 'kotlin-android'
+apply plugin: 'realm-android'
 
-apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
-apply plugin: 'realm-android'
+apply plugin: 'kotlin-kapt'
 
 allprojects {
     repositories {
         maven { url 'https://jitpack.io' }
+        maven { url "https://dl.bintray.com/kotlin/exposed" }
     }
 }
 
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
 
+    buildToolsVersion buildToolsVersion
     defaultConfig {
         applicationId "iam.thevoid.sudoku"
         minSdkVersion 16
@@ -48,6 +49,10 @@ android {
         }
     }
 
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+
     dataBinding {
         enabled = true
     }
@@ -59,36 +64,42 @@ dependencies {
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    compile 'com.android.support:multidex:1.0.2'
+    implementation supportDependencies.multidex
 
     // kotlin
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation kotlinDependencies.reflect
+    implementation kotlinDependencies.stdlib
+
+
+    kapt dataBindingCompiler
 
     // Support lib
-    implementation "com.android.support:support-v4:27.0.2"
-    implementation "com.android.support:appcompat-v7:27.0.2"
-    implementation "com.android.support:recyclerview-v7:27.0.2"
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation supportDependencies.appCompat
+    implementation supportDependencies.recyclerView
+    implementation supportDependencies.support
+    implementation supportDependencies.constraintLayout
 
-    implementation 'com.orhanobut:hawk:2.0.1'
+    implementation roomDependencies.roomRxJava2
+    implementation roomDependencies.roomRuntime
+    kapt roomDependencies.roomCompiler
 
-    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation hawk
+
+    implementation gson
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
 
     // Data binding
-    kapt 'com.android.databinding:compiler:3.0.1'
-    implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter:2.2.0'
-    implementation 'me.tatarka.bindingcollectionadapter2:bindingcollectionadapter-recyclerview:2.2.0'
+    implementation bindingCollectionAdapter.bindingadapter
+    implementation bindingCollectionAdapter.recycler
 
     implementation project(':material-palette')
 
-    // test
-//    testImplementation 'junit:junit:4.12'
-//
-//    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-//    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+//     test
+    testImplementation 'junit:junit:4.12'
+
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 }
 
 kapt {

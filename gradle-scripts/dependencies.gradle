@@ -1,0 +1,64 @@
+ext {
+
+    buildToolsVersion = "27.0.3"
+    bindingcollectionadapterVersion = '2.2.0'
+    constraintVersion = '1.0.2'
+    dataBindingVersion = gradle_version
+    gsonVersion = '2.8.1'
+    hawkVersion = '2.0.1'
+    kotlinVersion = kotlin_version
+    multidexVersion = '1.0.3'
+    roomVersion = '1.0.0'
+    roomRxjava2Versoin = '1.0.0'
+    supportVersion = "27.1.1"
+
+    bindingcollectionadapterPackage = 'me.tatarka.bindingcollectionadapter2'
+    supportPackage = 'com.android.support'
+    kotlinPackage = 'org.jetbrains.kotlin'
+    constraintPackage = 'com.android.support.constraint'
+    gsonPackage = 'com.google.code.gson'
+    hawkPackage = 'com.orhanobut'
+
+    lifecyclePackage = 'android.arch.lifecycle'
+    roomPackage = 'android.arch.persistence.room'
+    dataBindingPackage = 'com.android.databinding'
+
+
+    supportDependencies = [
+            multidex        : buildDependency(supportPackage, "multidex", multidexVersion),
+            appCompat       : buildDependency(supportPackage, 'appcompat-v7', supportVersion),
+            recyclerView    : buildDependency(supportPackage, 'recyclerview-v7', supportVersion),
+            support         : buildDependency(supportPackage, 'support-v4', supportVersion),
+            constraintLayout: buildDependency(constraintPackage, 'constraint-layout', constraintVersion),
+
+    ]
+
+    kotlinDependencies = [
+            reflect: buildDependency(kotlinPackage, 'kotlin-reflect', kotlinVersion),
+            stdlib : buildDependency(kotlinPackage, 'kotlin-stdlib', kotlinVersion)
+    ]
+
+    roomDependencies = [
+            roomRuntime : buildDependency(roomPackage, 'runtime', roomVersion),
+            roomCompiler: buildDependency(roomPackage, 'compiler', roomVersion),
+            roomRxJava2 : buildDependency(roomPackage, "rxjava2", roomRxjava2Versoin)
+
+    ]
+
+    bindingCollectionAdapter = [
+            bindingadapter: buildDependency(bindingcollectionadapterPackage, 'bindingcollectionadapter', bindingcollectionadapterVersion),
+            recycler      : buildDependency(bindingcollectionadapterPackage, 'bindingcollectionadapter-recyclerview', bindingcollectionadapterVersion)
+    ]
+
+    dataBindingCompiler = buildDependency(dataBindingPackage, 'compiler', dataBindingVersion)
+
+
+    hawk = buildDependency(hawkPackage, 'hawk', hawkVersion)
+    gson = buildDependency(gsonPackage, 'gson', gsonVersion)
+
+
+}
+
+static String buildDependency(String pack, String dependency, String version) {
+    return "${pack}:${dependency}:${version}"
+}
