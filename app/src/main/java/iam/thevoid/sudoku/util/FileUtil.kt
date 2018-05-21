@@ -1,16 +1,8 @@
 package iam.thevoid.sudoku.util
 
 import android.content.Context
-import iam.thevoid.sudoku.db.DbHandler
-import iam.thevoid.sudoku.db.model.Board
-import iam.thevoid.sudoku.db.model.Cell
 import iam.thevoid.sudoku.db.newdb.DbHelper
-import iam.thevoid.sudoku.db.newdb.entity.GameEntity
-import iam.thevoid.sudoku.db.newdb.enums.Difficulty
-import iam.thevoid.sudoku.db.newdb.models.Game
 import io.reactivex.Observable
-import io.reactivex.ObservableEmitter
-import io.realm.RealmList
 import java.util.regex.Pattern
 
 
@@ -39,7 +31,7 @@ fun extractAssets(context: Context, listener: (percent: Int) -> Unit) {
     }
 }
 
-fun extractFiles(context: Context): Observable<Int> {
+fun extractGames(context: Context): Observable<Int> {
     return Observable.create {
         extractAssets(context) { percent -> it.onNext(percent) }
         it.onComplete()

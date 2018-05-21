@@ -17,6 +17,9 @@ interface CellDao {
     @Query(value = "SELECT * FROM $TABLE_NAME_CELLS")
     fun all(): Single<List<CellEntity>>
 
+    @Query(value = "SELECT COUNT(*) FROM $TABLE_NAME_GAMES WHERE $COLUMN_CELL_GAME_ID = :gameId")
+    fun countFor(gameId : Long) : Int
+
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(cell: CellEntity)
 

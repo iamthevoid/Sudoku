@@ -1,6 +1,7 @@
 package iam.thevoid.sudoku.util
 
 import android.text.Selection.selectAll
+import com.orhanobut.hawk.Hawk.count
 import iam.thevoid.sudoku.db.newdb.DbHelper
 import iam.thevoid.sudoku.db.newdb.dao.ActionDao
 import iam.thevoid.sudoku.db.newdb.dao.CellDao
@@ -12,22 +13,36 @@ import iam.thevoid.sudoku.db.newdb.models.Action
 import iam.thevoid.sudoku.db.newdb.models.Cell
 import iam.thevoid.sudoku.db.newdb.models.Game
 import io.reactivex.Flowable
+import io.reactivex.Single
 import java.util.*
 
 /**
  * Created by iam on 08/09/2017.
  */
 
-fun ActionDao.all(): Flowable<List<Action>> {
-    return selectAll().map { it.map { it as Action } }
-}
+/**
+ * =================================================================================================
+ * ============================================ ACTION DAO =========================================
+ * =================================================================================================
+ */
 
-fun ActionDao.get(cellId : Long): Flowable<List<Action>> {
-    return selectForCell(cellId).map { it.map { it as Action } }
-}
+fun ActionDao.all() = selectAll().map { it.map { it as Action } }
+
+fun ActionDao.get(cellId : Long): Flowable<List<Action>> =
+        selectForCell(cellId).map { it.map { it as Action } }
+
+/**
+ * =================================================================================================
+ * ============================================== CELL DAO =========================================
+ * =================================================================================================
+ */
 
 fun CellDao.create(gameId : Long, contents : String) : List<Cell> {
     val cells = ArrayList<CellEntity>()
+    val createdCount = countFor(gameId)
+
+    if (createdCount > 0) return cells
+
     for (num in contents.toCharArray().indices) {
         cells.add(CellEntity(
                 contents[num].toIntVal(),
@@ -39,9 +54,7 @@ fun CellDao.create(gameId : Long, contents : String) : List<Cell> {
     return cells
 }
 
-fun CellDao.insert(cells : List<Cell>) {
-    cells.forEach { insert(it) }
-}
+fun CellDao.insert(cells : List<Cell>) = cells.forEach { insert(it) }
 
 
 fun CellDao.insert(cell : Cell) {
@@ -50,9 +63,17 @@ fun CellDao.insert(cell : Cell) {
     }
 }
 
-fun GameDao.create(contents : String) : Game {
-    return GameEntity(Difficulty.UNDEFINED, contents)
-}
+/**
+ * =================================================================================================
+ * ============================================== GAME DAO =========================================
+ * =================================================================================================
+ */
+
+fun GameDao.started() = getStarted().map { it.map { it as Game } }
+
+fun GameDao.notStarted() = getNotStarted().map { it as Game }
+
+fun GameDao.create(contents : String) = GameEntity(Difficulty.UNDEFINED, contents) as Game
 
 fun GameDao.createInDb(contents : String) : Game {
     val gameEntity = GameEntity(Difficulty.UNDEFINED, contents)

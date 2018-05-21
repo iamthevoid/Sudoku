@@ -1,5 +1,6 @@
-package iam.thevoid.sudoku.viewmodel
+package iam.thevoid.sudoku.ui.viewmodel
 
+import android.content.Context
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableInt
 import android.databinding.ObservableLong
@@ -11,6 +12,7 @@ import iam.thevoid.sudoku.ItemClickSupport
 import iam.thevoid.sudoku.R
 import iam.thevoid.sudoku.db.DbHandler
 import iam.thevoid.sudoku.db.model.Board
+import iam.thevoid.sudoku.ui.view.GameScreenView
 import iam.thevoid.sudoku.widget.BoardItemDecoration
 import iam.thevoid.sudoku.widget.CellGameWrapper
 import io.reactivex.Observable
@@ -20,7 +22,21 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by iam on 07/09/2017.
  */
-class GameScreenViewModel {
+class GameScreenViewModel : ViewModel<GameScreenView>() {
+
+    override fun init() {
+        board = DbHandler.getDao(Board::class.java) findFirstAndClose
+                { equalTo("isStarted", true) }
+
+        board?.cells?.map { CellGameWrapper(it) }?.let { cells.addAll(it) }
+
+        Observable.interval(0, 1, TimeUnit.SECONDS)
+                .subscribe { millis.set(millis.get() + 1000) }
+    }
+
+    override fun deinit() {
+
+    }
 
     var board: Board? = null
 
@@ -57,15 +73,5 @@ class GameScreenViewModel {
         cells.filter {
             it.insertedNumber == selected.get() && it.insertedNumber != 0
         }.forEach { it.sameNumber = true }
-    }
-
-    fun onInit() {
-        board = DbHandler.getDao(Board::class.java) findFirstAndClose
-                { equalTo("isStarted", true) }
-
-        board?.cells?.map { CellGameWrapper(it) }?.let { cells.addAll(it) }
-
-        Observable.interval(0, 1, TimeUnit.SECONDS)
-                .subscribe { millis.set(millis.get() + 1000) }
     }
 }

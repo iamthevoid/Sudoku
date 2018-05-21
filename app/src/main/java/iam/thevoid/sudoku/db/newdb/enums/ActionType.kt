@@ -5,5 +5,6 @@ enum class ActionType {
     REMOVE_NUMBER,
     ADD_CANDIDATE,
     REMOVE_CANDIDATE,
+    CLEAR_CELL,
     UNDEFINED
 }

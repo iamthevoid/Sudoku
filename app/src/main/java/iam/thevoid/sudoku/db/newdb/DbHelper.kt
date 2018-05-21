@@ -7,7 +7,7 @@ import android.content.Context
  * Created by alese_000 on 10.04.2018.
  */
 
-const val DB_VERSION = 12
+const val DB_VERSION = 13
 const val DB_NAME = "sudoku_database.db"
 
 private const val COLUMN_ID = "id"
@@ -21,6 +21,7 @@ const val TABLE_NAME_GAMES = "games"
 const val COLUMN_ACTION_ID = COLUMN_ID
 const val COLUMN_ACTION_CELL_ID = "cell_id"
 const val COLUMN_ACTION_TYPE = "type"
+const val COLUMN_ACTION_TIMESTAMP = "timestamp"
 const val COLUMN_ACTION_NUMBER = "number"
 
 // cell

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import iam.thevoid.sudoku.widget.CellGameWrapper
+import io.reactivex.functions.Action
 import me.tatarka.bindingcollectionadapter2.BindingCollectionAdapter
 
 /**
@@ -15,9 +16,15 @@ import me.tatarka.bindingcollectionadapter2.BindingCollectionAdapter
 /**
  * VIEW BINDING
  */
+
 @BindingAdapter("click")
 fun setOnClickListener(view: View, listener: View.OnClickListener) {
     view.setOnClickListener(listener)
+}
+
+@BindingAdapter("clickAction")
+fun setOnClickListener(view: View, listener: Action) {
+    view.setOnClickListener(View.OnClickListener { listener.run() })
 }
 
 @BindingAdapter("visibile", "type", requireAll = false)

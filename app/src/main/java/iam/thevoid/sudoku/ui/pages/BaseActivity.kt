@@ -1,8 +1,7 @@
-package iam.thevoid.sudoku.pages
+package iam.thevoid.sudoku.ui.pages
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 

@@ -1,4 +1,4 @@
-package iam.thevoid.sudoku.pages
+package iam.thevoid.sudoku.ui.pages
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -24,7 +24,7 @@ class TestActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.test_activity)
+        setContentView(R.layout.activity_test)
 
         DbHelper.init(this)
 

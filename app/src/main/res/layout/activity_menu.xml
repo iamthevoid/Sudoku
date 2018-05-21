@@ -6,7 +6,7 @@
 
         <variable
             name="vm"
-            type="iam.thevoid.sudoku.viewmodel.MenuViewModel" />
+            type="iam.thevoid.sudoku.ui.viewmodel.MenuViewModel" />
     </data>
 
     <FrameLayout
@@ -21,14 +21,14 @@
             android:orientation="vertical">
             <TextView
                 style="@style/MenuItem"
-                app:click="@{vm.onResumeClick}"
+                app:clickAction="@{vm.onResumeClick}"
                 app:visibile="@{vm.isGameStarted}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/resume"/>
             <TextView
                 style="@style/MenuItem"
-                app:click="@{vm.onStartClick}"
+                app:clickAction="@{vm.onStartClick}"
                 app:visibile="@{!vm.isGameStarted}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 <!--android:text="@string/statistics"/>-->
             <TextView
                 style="@style/MenuItem"
-                app:click="@{vm.onExitClick}"
+                app:clickAction="@{vm.onExitClick}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/exit"/>

@@ -5,6 +5,7 @@ import android.arch.persistence.room.ForeignKey.CASCADE
 import iam.thevoid.sudoku.db.newdb.*
 import iam.thevoid.sudoku.db.newdb.enums.ActionType
 import iam.thevoid.sudoku.db.newdb.models.Action
+import java.util.*
 
 @Entity(tableName = TABLE_NAME_ACTIONS,
         foreignKeys = [
@@ -26,6 +27,9 @@ class ActionEntity(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = COLUMN_ACTION_ID)
     override var id: Long = 0
+
+    @ColumnInfo(name = COLUMN_ACTION_TIMESTAMP)
+    override val timestamp: Date = Date()
 
     override fun toString(): String {
         return "type = ${type.name}, cellId = $cellId, num = $number"

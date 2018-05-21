@@ -13,6 +13,9 @@ class App : MultiDexApplication() {
         super.onCreate()
         DbHandler.init(this)
         DbHelper.init(this)
+        // Used to load the 'native-lib' library on application startup.
+        System.loadLibrary("native-lib")
+
     }
 
 }

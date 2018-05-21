@@ -3,7 +3,7 @@
     <data>
         <variable
             name="vm"
-            type="iam.thevoid.sudoku.viewmodel.SplashViewModel"/>
+            type="iam.thevoid.sudoku.ui.viewmodel.SplashViewModel"/>
     </data>
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

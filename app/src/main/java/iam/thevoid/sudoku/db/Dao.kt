@@ -25,18 +25,6 @@ class Dao<T>(private val cls: Class<T>) where T : RealmObject, T : DbEntity {
         return DbHandler.getRealm().where(cls)
     }
 
-    fun count(): Int {
-        val c = query().count()
-        DbHandler.close()
-        return c.toInt()
-    }
-
-    infix fun count(applyQuery: RealmQuery<T>.() -> Unit): Int {
-        val c = query().apply(applyQuery).count()
-        DbHandler.close()
-        return c.toInt()
-    }
-
     infix fun findFirstAndClose(applyQuery: RealmQuery<T>.() -> Unit): T? {
         val entity = clone(query().apply(applyQuery).findFirst())
         DbHandler.close()
