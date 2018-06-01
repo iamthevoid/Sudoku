@@ -42,14 +42,6 @@ class TestActivity : AppCompatActivity() {
             currentCellId = if (currentCellId == TEST_CELL_ID) 2 else TEST_CELL_ID
         }
 
-//        DbHelper.database.actionDao().selectForCell(TEST_CELL_ID)
-//                .subscribe({
-//                    print("Cell 1")
-//                    print(it.joinToString { it.toString() })
-//                }, Throwable::printStackTrace)
-//                { print("completed") }
-
-
         DbHelper.database.actionDao().selectAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

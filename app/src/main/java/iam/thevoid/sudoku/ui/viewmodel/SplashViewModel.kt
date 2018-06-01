@@ -3,8 +3,8 @@ package iam.thevoid.sudoku.ui.viewmodel
 import android.databinding.ObservableInt
 import iam.thevoid.sudoku.db.newdb.DbHelper
 import iam.thevoid.sudoku.ui.view.SplashView
+import iam.thevoid.sudoku.ui.viewmodel.base.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by iam on 16/09/2017.

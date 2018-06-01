@@ -1,4 +1,4 @@
-package iam.thevoid.sudoku.ui.viewmodel
+package iam.thevoid.sudoku.ui.viewmodel.base
 
 /**
  * Created by iam on 16/09/2017.

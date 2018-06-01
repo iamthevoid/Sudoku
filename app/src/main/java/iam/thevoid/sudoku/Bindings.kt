@@ -5,7 +5,6 @@ import android.databinding.BindingConversion
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
-import iam.thevoid.sudoku.widget.CellGameWrapper
 import io.reactivex.functions.Action
 import me.tatarka.bindingcollectionadapter2.BindingCollectionAdapter
 

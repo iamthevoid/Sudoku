@@ -1,6 +1,6 @@
-package iam.thevoid.sudoku.ui.viewmodel
+package iam.thevoid.sudoku.ui.viewmodel.base
 
-import iam.thevoid.sudoku.ui.view.MvvmView
+import iam.thevoid.sudoku.ui.view.base.MvvmView
 
 /**
  * Created by iam on 16/09/2017.

@@ -14,6 +14,9 @@ interface CellDao {
     @Query(value = "SELECT * FROM $TABLE_NAME_CELLS where $COLUMN_CELL_ID = :id LIMIT 1")
     fun get(id: Long): Single<CellEntity>
 
+    @Query(value = "SELECT * FROM $TABLE_NAME_CELLS where $COLUMN_CELL_GAME_ID = :gameId")
+    fun getFor(gameId: Long): Flowable<List<CellEntity>>
+
     @Query(value = "SELECT * FROM $TABLE_NAME_CELLS")
     fun all(): Single<List<CellEntity>>
 

@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
-import iam.thevoid.sudoku.ui.view.MvvmView
-import iam.thevoid.sudoku.ui.viewmodel.ViewModel
+import iam.thevoid.sudoku.ui.view.base.MvvmView
+import iam.thevoid.sudoku.ui.viewmodel.base.ViewModel
 
 /**
  * Created by iam on 07/09/2017.

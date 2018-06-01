@@ -1,8 +1,5 @@
 package iam.thevoid.sudoku.util
 
-import android.text.Selection.selectAll
-import com.orhanobut.hawk.Hawk.count
-import iam.thevoid.sudoku.db.newdb.DbHelper
 import iam.thevoid.sudoku.db.newdb.dao.ActionDao
 import iam.thevoid.sudoku.db.newdb.dao.CellDao
 import iam.thevoid.sudoku.db.newdb.dao.GameDao
@@ -13,7 +10,6 @@ import iam.thevoid.sudoku.db.newdb.models.Action
 import iam.thevoid.sudoku.db.newdb.models.Cell
 import iam.thevoid.sudoku.db.newdb.models.Game
 import io.reactivex.Flowable
-import io.reactivex.Single
 import java.util.*
 
 /**
@@ -28,7 +24,7 @@ import java.util.*
 
 fun ActionDao.all() = selectAll().map { it.map { it as Action } }
 
-fun ActionDao.get(cellId : Long): Flowable<List<Action>> =
+fun ActionDao.get(cellId: Long): Flowable<List<Action>> =
         selectForCell(cellId).map { it.map { it as Action } }
 
 /**
@@ -37,7 +33,7 @@ fun ActionDao.get(cellId : Long): Flowable<List<Action>> =
  * =================================================================================================
  */
 
-fun CellDao.create(gameId : Long, contents : String) : List<Cell> {
+fun CellDao.create(gameId: Long, contents: String): List<Cell> {
     val cells = ArrayList<CellEntity>()
     val createdCount = countFor(gameId)
 
@@ -54,10 +50,10 @@ fun CellDao.create(gameId : Long, contents : String) : List<Cell> {
     return cells
 }
 
-fun CellDao.insert(cells : List<Cell>) = cells.forEach { insert(it) }
+fun CellDao.insert(cells: List<Cell>) = cells.forEach { insert(it) }
 
 
-fun CellDao.insert(cell : Cell) {
+fun CellDao.insert(cell: Cell) {
     if (cell is CellEntity) {
         insert(cell)
     }
@@ -73,15 +69,15 @@ fun GameDao.started() = getStarted().map { it.map { it as Game } }
 
 fun GameDao.notStarted() = getNotStarted().map { it as Game }
 
-fun GameDao.create(contents : String) = GameEntity(Difficulty.UNDEFINED, contents) as Game
+fun GameDao.create(contents: String) = GameEntity(Difficulty.UNDEFINED, contents) as Game
 
-fun GameDao.createInDb(contents : String) : Game {
+fun GameDao.createInDb(contents: String): Game {
     val gameEntity = GameEntity(Difficulty.UNDEFINED, contents)
     insert(gameEntity)
     return getLast()
 }
 
-fun GameDao.insert(game : Game) {
+fun GameDao.insert(game: Game) {
     if (game is GameEntity) {
         insert(game)
     }

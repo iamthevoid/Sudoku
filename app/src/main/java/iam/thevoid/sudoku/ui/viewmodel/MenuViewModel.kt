@@ -1,9 +1,9 @@
 package iam.thevoid.sudoku.ui.viewmodel
 
 import android.databinding.ObservableBoolean
-import android.view.View
 import iam.thevoid.sudoku.db.newdb.DbHelper
 import iam.thevoid.sudoku.ui.view.MenuView
+import iam.thevoid.sudoku.ui.viewmodel.base.ViewModel
 import iam.thevoid.sudoku.util.*
 import io.reactivex.functions.Action
 

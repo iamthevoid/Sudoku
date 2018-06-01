@@ -1,12 +1,11 @@
-package iam.thevoid.sudoku.widget
+package iam.thevoid.sudoku.ui.viewmodel.descriptors
 
 import android.content.Context
 import android.databinding.BaseObservable
 import android.graphics.drawable.Drawable
 import android.support.v4.content.ContextCompat
 import iam.thevoid.sudoku.R
-import iam.thevoid.sudoku.db.model.Cell
-import kotlin.reflect.KProperty
+import iam.thevoid.sudoku.db.newdb.models.Cell
 
 /**
  * Created by alese_000 on 09.02.2018.
@@ -20,8 +19,6 @@ class CellGameWrapper(private val cell: Cell) : BaseObservable() {
         }
 
     var wrong = false
-
-    var insertedNumber: Int by cell.insertedNumber
 
     val isOddBlock: Boolean
         get() {
@@ -51,14 +48,5 @@ class CellGameWrapper(private val cell: Cell) : BaseObservable() {
             cell.x % 3 == 2 && cell.y % 3 == 2 -> R.drawable.cell_foreground_bottom_right_thick
             else -> throw IllegalArgumentException("Cell with x = ${cell.x} and y = ${cell.y} cannot has foreground")
         })
-    }
-
-    private operator fun Int.setValue(thisRef: CellGameWrapper, property: KProperty<*>, value: Int) {
-        thisRef.cell.insertedNumber = value
-        notifyChange()
-    }
-
-    private operator fun Int.getValue(thisRef: CellGameWrapper, property: KProperty<*>) : Int {
-        return thisRef.cell.insertedNumber
     }
 }

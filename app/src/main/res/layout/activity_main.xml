@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="iam.thevoid.sudoku.ui.viewmodel.GameScreenViewModel" />
+            type="iam.thevoid.sudoku.ui.viewmodel.GameViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
